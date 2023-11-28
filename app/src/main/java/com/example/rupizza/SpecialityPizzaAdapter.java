@@ -39,7 +39,7 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         // Load pizza image using Glide
         Glide.with(context)
                 .load(getPizzaImageResource(pizza.getPizzaType())) // Define a method to map pizza types to image resources
-                .placeholder(R.drawable.deluxe) // Placeholder image while loading
+                .placeholder(R.drawable.ic_launcher_background) // Placeholder image while loading
 //                .error(R.drawable. // Error image if loading fails
                 .into(holder.imagePizza);
 
@@ -56,29 +56,29 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     private int getPizzaImageResource(Pizza.PizzaType pizzaType) {
         switch (pizzaType) {
             case DELUXE:
-                return R.drawable.deluxe;
+                return R.drawable.ic_launcher_background;
             case SUPREME:
-                return R.drawable.supreme;
+                return R.drawable.ic_launcher_background;
             case SEAFOOD:
-                return R.drawable.seafood;
+                return R.drawable.ic_launcher_background;
             case PEPPERONI:
-                return R.drawable.salmon;
+                return R.drawable.ic_launcher_background;
             case MEATZZA:
-                return R.drawable.meattza;
+                return R.drawable.ic_launcher_background;
             case HALAL:
-                return R.drawable.halal;
+                return R.drawable.ic_launcher_background;
             case CHEESE:
-                return R.drawable.cheese;
+                return R.drawable.ic_launcher_background;
             case SALMON:
-                return R.drawable.salmon;
+                return R.drawable.ic_launcher_background;
             case SHRIMP:
-                return R.drawable.pizza;
+                return R.drawable.ic_launcher_background;
             case MIX_GRILL:
-                return R.drawable.mixedgrill;
+                return R.drawable.ic_launcher_background;
             case BUFFALO_CHICKEN:
-                return R.drawable.buffalo;
+                return R.drawable.ic_launcher_background;
             default:
-                return R.drawable.pizza; // Default image if no match
+                return R.drawable.ic_launcher_background;
         }
     }
 }
