@@ -21,8 +21,6 @@ public abstract class Pizza {
      * @return The pizza type.
      */
     public abstract PizzaType getPizzaType();
-
-
     /**
      * Abstract method to set the order ID for a pizza.
      *
@@ -41,7 +39,7 @@ public abstract class Pizza {
      * Enum For Pizza Types
      */
     public enum PizzaType {
-        DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, BUILD_YOUR_OWN
+        DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, HALAL, CHEESE, MIX_GRILL, SALMON, SHRIMP, BUFFALO_CHICKEN, BUILD_YOUR_OWN
     }
 
     /**
@@ -72,7 +70,7 @@ public abstract class Pizza {
      */
     public static Pizza createPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese) {
         return switch (pizzaType) {
-            case DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI -> new SpecialityPizza(pizzaType, size, extraSauce, extraCheese);
+            case DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, HALAL, BUFFALO_CHICKEN, CHEESE, MIX_GRILL, SALMON, SHRIMP -> new SpecialityPizza(pizzaType, size, extraSauce, extraCheese);
             case BUILD_YOUR_OWN -> new BuildYourOwnPizza(pizzaType, size, extraSauce, extraCheese, new ArrayList<>());
         };
     }

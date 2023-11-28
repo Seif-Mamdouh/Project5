@@ -31,12 +31,7 @@ public class Speciality_Pizza extends AppCompatActivity {
         setContentView(R.layout.activity_speciality_pizza);
 
         // Create a list of Pizza objects with different types
-        List<Pizza> pizzaList = new ArrayList<>();
-        pizzaList.add(new SpecialityPizza(Pizza.PizzaType.DELUXE, Size.MEDIUM, false, false));
-        pizzaList.add(new SpecialityPizza(Pizza.PizzaType.SUPREME, Size.LARGE, true, false));
-        pizzaList.add(new SpecialityPizza(Pizza.PizzaType.MEATZZA, Size.SMALL, true, true));
-
-        // Add more pizzas or types as needed
+        List<Pizza> pizzaList = createPizzaList();
 
         // Initialize RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -45,5 +40,29 @@ public class Speciality_Pizza extends AppCompatActivity {
         // Create and set the adapter
         SpecialityPizzaAdapter adapter = new SpecialityPizzaAdapter(pizzaList, this);
         recyclerView.setAdapter(adapter);
+    }
+
+
+    private List<Pizza> createPizzaList() {
+        List<Pizza> list = new ArrayList<>();
+
+        // Add pizzas using a loop or any other approach
+        list.add(createPizza(Pizza.PizzaType.DELUXE, Size.MEDIUM, false, false));
+        list.add(createPizza(Pizza.PizzaType.SUPREME, Size.LARGE, true, false));
+        list.add(createPizza(Pizza.PizzaType.MEATZZA, Size.SMALL, true, true));
+        list.add(createPizza(Pizza.PizzaType.SEAFOOD, Size.MEDIUM, true, false));
+        list.add(createPizza(Pizza.PizzaType.PEPPERONI, Size.LARGE, false, true));
+        list.add(createPizza(Pizza.PizzaType.HALAL, Size.MEDIUM, true, true));
+        list.add(createPizza(Pizza.PizzaType.BUFFALO_CHICKEN, Size.LARGE, false, true));
+        list.add(createPizza(Pizza.PizzaType.CHEESE, Size.SMALL, false, false));
+        list.add(createPizza(Pizza.PizzaType.MIX_GRILL, Size.MEDIUM, true, false));
+        list.add(createPizza(Pizza.PizzaType.SALMON, Size.LARGE, true, true));
+        list.add(createPizza(Pizza.PizzaType.SHRIMP, Size.SMALL, false, true));
+
+        return list;
+    }
+
+    private SpecialityPizza createPizza(Pizza.PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese) {
+        return new SpecialityPizza(pizzaType, size, extraSauce, extraCheese);
     }
 }
