@@ -16,6 +16,14 @@ public abstract class Pizza {
     protected boolean extraCheese;
 
     /**
+     * Get the type of the pizza.
+     *
+     * @return The pizza type.
+     */
+    public abstract PizzaType getPizzaType();
+
+
+    /**
      * Abstract method to set the order ID for a pizza.
      *
      * @param orderID The order ID to set for the pizza.
@@ -65,7 +73,7 @@ public abstract class Pizza {
     public static Pizza createPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese) {
         return switch (pizzaType) {
             case DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI -> new SpecialityPizza(pizzaType, size, extraSauce, extraCheese);
-            case BUILD_YOUR_OWN -> new BuildYourOwnPizza(size, extraSauce, extraCheese, new ArrayList<>());
+            case BUILD_YOUR_OWN -> new BuildYourOwnPizza(pizzaType, size, extraSauce, extraCheese, new ArrayList<>());
         };
     }
 

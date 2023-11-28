@@ -88,6 +88,11 @@ public class SpecialityPizza extends Pizza {
         this.extraCheese = extraCheese;
     }
 
+    @Override
+    public PizzaType getPizzaType() {
+        return pizzaType;
+    }
+
     /**
      * Sets the order ID for the specialty pizza.
      *

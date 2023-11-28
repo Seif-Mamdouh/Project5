@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.rupizza.R;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
@@ -34,7 +33,8 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     @Override
     public void onBindViewHolder(@NonNull SpecialityPizzaViewHolder holder, int position) {
         Pizza pizza = pizzaList.get(position);
-        holder.pizzaDetails.setText(pizza.toString());
+        // Display only the pizza type
+        holder.pizzaDetails.setText(pizza.getPizzaType().toString());
     }
 
     @Override
