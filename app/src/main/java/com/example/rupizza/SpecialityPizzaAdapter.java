@@ -11,6 +11,8 @@ import com.example.rupizza.R;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
 import com.example.rupizza.SpecialityPizzaViewHolder;
+import com.bumptech.glide.Glide;
+
 
 import java.util.List;
 
@@ -33,12 +35,50 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     @Override
     public void onBindViewHolder(@NonNull SpecialityPizzaViewHolder holder, int position) {
         Pizza pizza = pizzaList.get(position);
+
+        // Load pizza image using Glide
+        Glide.with(context)
+                .load(getPizzaImageResource(pizza.getPizzaType())) // Define a method to map pizza types to image resources
+                .placeholder(R.drawable.deluxe) // Placeholder image while loading
+//                .error(R.drawable. // Error image if loading fails
+                .into(holder.imagePizza);
+
         // Display only the pizza type
-        holder.pizzaDetails.setText(pizza.getPizzaType().toString());
+        holder.textPizzaDetails.setText(pizza.getPizzaType().toString());
     }
 
     @Override
     public int getItemCount() {
         return pizzaList.size();
+    }
+
+
+    private int getPizzaImageResource(Pizza.PizzaType pizzaType) {
+        switch (pizzaType) {
+            case DELUXE:
+                return R.drawable.deluxe;
+            case SUPREME:
+                return R.drawable.supreme;
+            case SEAFOOD:
+                return R.drawable.seafood;
+            case PEPPERONI:
+                return R.drawable.salmon;
+            case MEATZZA:
+                return R.drawable.meattza;
+            case HALAL:
+                return R.drawable.halal;
+            case CHEESE:
+                return R.drawable.cheese;
+            case SALMON:
+                return R.drawable.salmon;
+            case SHRIMP:
+                return R.drawable.pizza;
+            case MIX_GRILL:
+                return R.drawable.mixedgrill;
+            case BUFFALO_CHICKEN:
+                return R.drawable.buffalo;
+            default:
+                return R.drawable.pizza; // Default image if no match
+        }
     }
 }
