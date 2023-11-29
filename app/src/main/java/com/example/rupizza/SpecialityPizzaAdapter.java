@@ -2,9 +2,11 @@ package com.example.rupizza;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -37,7 +39,7 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
     @Override
     public void onBindViewHolder(@NonNull SpecialityPizzaViewHolder holder, int position) {
-        Pizza pizza = pizzaList.get(position);
+        SpecialityPizza pizza = (SpecialityPizza) pizzaList.get(position);
 
         // Load pizza image using Glide
         Glide.with(context)
@@ -61,14 +63,41 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
             holder.textToppings.setText("No toppings");
         }
 
-
         ArrayAdapter<Size> sizeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, Size.values());
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinnerSize.setAdapter(sizeAdapter);
 
-        int selectedSizePosition = sizeAdapter.getPosition(pizza.getSize());
-        holder.spinnerSize.setSelection(selectedSizePosition);
+
+        holder.checkBoxExtraCheese.setChecked(pizza.isExtraCheese());
+        holder.checkBoxExtraSauce.setChecked(pizza.isExtraSauce());
+
+        // Handle spinner item selection
+        holder.spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selectedPosition, long id) {
+                // Create a SpecialityPizza with the selected size
+                Size selectedSize = Size.values()[selectedPosition];
+                Pizza selectedPizza = Pizza.createPizza(
+                        pizza.getPizzaType(),
+                        selectedSize,
+                        pizza.isExtraSauce(),
+                        pizza.isExtraCheese(),
+                        pizza.getToppings(),
+                        pizza.getQuantity()
+                );
+
+                // Do something with the selected pizza, e.g., update the data set or perform an action
+                // For now, let's just log the details
+                Log.d("SpecialityPizzaAdapter", "Selected Pizza: " + selectedPizza);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing if nothing is selected
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {

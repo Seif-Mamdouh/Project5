@@ -45,6 +45,9 @@ public abstract class Pizza {
         return toppings;
     }
 
+    public void setSize(Size item) {
+    }
+
     /**
      * Enum For Pizza Types
      */
@@ -76,6 +79,15 @@ public abstract class Pizza {
      */
     public int getQuantity() {
         return quantity;
+    }
+
+
+    public boolean isExtraCheese() {
+        return extraCheese;
+    }
+
+    public boolean isExtraSauce() {
+        return extraSauce;
     }
 
 

@@ -36,12 +36,25 @@
 
         <Spinner
             android:id="@+id/spinnerSize"
-            android:layout_width="179dp"
+            android:layout_width="222dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textPizzaDetails"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkBoxExtraCheese"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Extra Cheese" />
+
+        <CheckBox
+            android:id="@+id/checkBoxExtraSauce"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Extra Sauce" />
+
 
     </LinearLayout>
     </androidx.cardview.widget.CardView>
