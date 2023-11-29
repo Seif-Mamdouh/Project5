@@ -56,27 +56,27 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     private int getPizzaImageResource(Pizza.PizzaType pizzaType) {
         switch (pizzaType) {
             case DELUXE:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.deluxe;
             case SUPREME:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.supreme;
             case SEAFOOD:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.seafood;
             case PEPPERONI:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.pepperoni;
             case MEATZZA:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.meattza;
             case HALAL:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.halal;
             case CHEESE:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.cheese;
             case SALMON:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.salmon;
             case SHRIMP:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.pizza;
             case MIX_GRILL:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.mixedgrill;
             case BUFFALO_CHICKEN:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.buffalo;
             default:
                 return R.drawable.ic_launcher_background;
         }
