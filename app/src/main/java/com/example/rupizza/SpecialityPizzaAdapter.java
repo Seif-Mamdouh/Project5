@@ -5,11 +5,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.rupizza.R;
 import com.example.rupizza.RuPizza.Pizza;
+import com.example.rupizza.RuPizza.Size;
 import com.example.rupizza.RuPizza.SpecialityPizza;
 import com.example.rupizza.SpecialityPizzaViewHolder;
 import com.bumptech.glide.Glide;
@@ -58,9 +60,15 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         } else {
             holder.textToppings.setText("No toppings");
         }
+
+
+        ArrayAdapter<Size> sizeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, Size.values());
+        sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        holder.spinnerSize.setAdapter(sizeAdapter);
+
+        int selectedSizePosition = sizeAdapter.getPosition(pizza.getSize());
+        holder.spinnerSize.setSelection(selectedSizePosition);
     }
-
-
 
     @Override
     public int getItemCount() {

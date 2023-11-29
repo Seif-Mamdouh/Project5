@@ -18,10 +18,12 @@ public class PizzaMaker {
      * @param extraSauce  Indicates whether extra sauce should be added to the pizza.
      * @param extraCheese Indicates whether extra cheese should be added to the pizza.
      * @param toppings    The list of toppings to add to the pizza.
+     * @param quantity    The quantity of pizzas.
      * @return A new pizza instance based on the provided parameters.
      */
-    public static Pizza createPizza(Pizza.PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese, List<String> toppings) {
-        return Pizza.createPizza(pizzaType, size, extraSauce, extraCheese, Collections.singletonList(toppings.toString()));
+    public static Pizza createPizza(Pizza.PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese, List<String> toppings, int quantity) {
+        return Pizza.createPizza(pizzaType, size, extraSauce, extraCheese, toppings, quantity);
     }
 }
+
 
