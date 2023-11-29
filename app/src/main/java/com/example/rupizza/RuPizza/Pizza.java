@@ -1,6 +1,9 @@
 package com.example.rupizza.RuPizza;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract class representing a pizza in the pizza ordering system.
@@ -35,6 +38,10 @@ public abstract class Pizza {
 
     }
 
+    public List<String> getToppings() {
+        return toppings;
+    }
+
     /**
      * Enum For Pizza Types
      */
@@ -42,21 +49,31 @@ public abstract class Pizza {
         DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, HALAL, CHEESE, MIX_GRILL, SALMON, SHRIMP, BUFFALO_CHICKEN, BUILD_YOUR_OWN
     }
 
-    /**
-     * Constructor for creating a pizza with specified toppings, size, sauce, and additional options.
-     *
-     * @param toppings    The toppings to add to the pizza.
-     * @param size        The size of the pizza.
-     * @param sauce       The sauce type for the pizza.
-     * @param extraSauce  Indicates whether extra sauce should be added to the pizza.
-     * @param extraCheese Indicates whether extra cheese should be added to the pizza.
-     */
-    public Pizza(ArrayList<String> toppings, Size size, Sauce sauce, boolean extraSauce, boolean extraCheese) {
-        this.toppings = toppings;
+
+    public Pizza(List<String> toppings, Size size, boolean extraSauce, boolean extraCheese) {
+        this.toppings = new ArrayList<>(toppings);
         this.size = size;
-        this.sauce = sauce;
         this.extraSauce = extraSauce;
         this.extraCheese = extraCheese;
+    }
+
+    // Add this method to get default toppings for each pizza type
+    public static List<String> getDefaultToppings(PizzaType pizzaType) {
+        Map<PizzaType, List<String>> defaultToppingsMap = new HashMap<>();
+        // Define default toppings for each pizza type
+        defaultToppingsMap.put(PizzaType.DELUXE, List.of("Mushrooms", "Pepperoni", "Green Peppers"));
+        defaultToppingsMap.put(PizzaType.SUPREME, List.of("Sausage", "Black Olives", "Onions"));
+        defaultToppingsMap.put(PizzaType.MEATZZA, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.SEAFOOD, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.PEPPERONI, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.HALAL, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.CHEESE, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.MIX_GRILL, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.SALMON, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.SHRIMP, List.of("Bacon", "Sausage", "Pepperoni"));
+        defaultToppingsMap.put(PizzaType.BUFFALO_CHICKEN, List.of("Bacon", "Sausage", "Pepperoni"));
+
+        return defaultToppingsMap.getOrDefault(pizzaType, new ArrayList<>());
     }
 
     /**
@@ -68,12 +85,13 @@ public abstract class Pizza {
      * @param extraCheese Indicates whether extra cheese should be added to the pizza.
      * @return A new pizza instance based on the provided parameters.
      */
-    public static Pizza createPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese) {
+    public static Pizza createPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese, List<String> toppings) {
         return switch (pizzaType) {
-            case DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, HALAL, BUFFALO_CHICKEN, CHEESE, MIX_GRILL, SALMON, SHRIMP -> new SpecialityPizza(pizzaType, size, extraSauce, extraCheese);
-            case BUILD_YOUR_OWN -> new BuildYourOwnPizza(pizzaType, size, extraSauce, extraCheese, new ArrayList<>());
+            case DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, HALAL, BUFFALO_CHICKEN, CHEESE, MIX_GRILL, SALMON, SHRIMP -> new SpecialityPizza(pizzaType, size, extraSauce, extraCheese, toppings);
+            case BUILD_YOUR_OWN -> new BuildYourOwnPizza(pizzaType, size, extraSauce, extraCheese, toppings);
         };
     }
+
 
     /**
      * Abstract method to be implemented by subclasses for calculating the price of the pizza.

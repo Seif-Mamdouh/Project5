@@ -1,6 +1,7 @@
 package com.example.rupizza;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,14 +39,28 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
         // Load pizza image using Glide
         Glide.with(context)
-                .load(getPizzaImageResource(pizza.getPizzaType())) // Define a method to map pizza types to image resources
-                .placeholder(R.drawable.ic_launcher_background) // Placeholder image while loading
-//                .error(R.drawable. // Error image if loading fails
+                .load(getPizzaImageResource(pizza.getPizzaType()))
+                .placeholder(R.drawable.pizza)
                 .into(holder.imagePizza);
 
-        // Display only the pizza type
+        // Display pizza type
         holder.textPizzaDetails.setText(pizza.getPizzaType().toString());
+
+        // Display toppings
+        List<String> toppings = pizza.getToppings();
+        if (toppings == null || toppings.isEmpty()) {
+            // If toppings list is not provided, use default toppings
+            toppings = Pizza.getDefaultToppings(pizza.getPizzaType());
+        }
+
+        if (toppings != null && !toppings.isEmpty()) {
+            holder.textToppings.setText("Toppings: " + TextUtils.join(", ", toppings));
+        } else {
+            holder.textToppings.setText("No toppings");
+        }
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -54,6 +69,11 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
 
     private int getPizzaImageResource(Pizza.PizzaType pizzaType) {
+        if (pizzaType == null) {
+            // Handle null case, return a default image or something
+            return R.drawable.pizza;
+        }
+
         switch (pizzaType) {
             case DELUXE:
                 return R.drawable.deluxe;

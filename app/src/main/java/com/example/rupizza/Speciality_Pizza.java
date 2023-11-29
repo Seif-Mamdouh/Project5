@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.rupizza.RuPizza.Pizza;
+import com.example.rupizza.RuPizza.PizzaMaker;
 import com.example.rupizza.RuPizza.Size;
 import com.example.rupizza.RuPizza.SpecialityPizza;
 
@@ -39,30 +40,35 @@ public class Speciality_Pizza extends AppCompatActivity {
 
         // Create and set the adapter
         SpecialityPizzaAdapter adapter = new SpecialityPizzaAdapter(pizzaList, this);
+
         recyclerView.setAdapter(adapter);
     }
+
 
 
     private List<Pizza> createPizzaList() {
         List<Pizza> list = new ArrayList<>();
 
         // Add pizzas using a loop or any other approach
-        list.add(createPizza(Pizza.PizzaType.DELUXE, Size.MEDIUM, false, false));
-        list.add(createPizza(Pizza.PizzaType.SUPREME, Size.LARGE, true, false));
-        list.add(createPizza(Pizza.PizzaType.MEATZZA, Size.SMALL, true, true));
-        list.add(createPizza(Pizza.PizzaType.SEAFOOD, Size.MEDIUM, true, false));
-        list.add(createPizza(Pizza.PizzaType.PEPPERONI, Size.LARGE, false, true));
-        list.add(createPizza(Pizza.PizzaType.HALAL, Size.MEDIUM, true, true));
-        list.add(createPizza(Pizza.PizzaType.BUFFALO_CHICKEN, Size.LARGE, false, true));
-        list.add(createPizza(Pizza.PizzaType.CHEESE, Size.SMALL, false, false));
-        list.add(createPizza(Pizza.PizzaType.MIX_GRILL, Size.MEDIUM, true, false));
-        list.add(createPizza(Pizza.PizzaType.SALMON, Size.LARGE, true, true));
-        list.add(createPizza(Pizza.PizzaType.SHRIMP, Size.SMALL, false, true));
+        list.add(createPizza(Pizza.PizzaType.DELUXE, Size.MEDIUM, false, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.SUPREME, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.MEATZZA, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.SEAFOOD, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.PEPPERONI, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.HALAL, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.CHEESE, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.MIX_GRILL, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.SALMON, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.SHRIMP, Size.LARGE, true, false, new ArrayList<>()));
+        list.add(createPizza(Pizza.PizzaType.BUFFALO_CHICKEN, Size.LARGE, true, false, new ArrayList<>()));
+
+
 
         return list;
     }
 
-    private SpecialityPizza createPizza(Pizza.PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese) {
-        return new SpecialityPizza(pizzaType, size, extraSauce, extraCheese);
+    private SpecialityPizza createPizza(Pizza.PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese, List<String> toppings) {
+        List<String> defaultToppings = Pizza.getDefaultToppings(pizzaType);
+        return new SpecialityPizza(pizzaType, size, extraSauce, extraCheese, defaultToppings);
     }
 }

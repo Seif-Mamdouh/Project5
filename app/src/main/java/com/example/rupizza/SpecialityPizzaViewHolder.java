@@ -11,9 +11,12 @@ public class SpecialityPizzaViewHolder extends RecyclerView.ViewHolder {
     public ImageView imagePizza;
     public TextView textPizzaDetails;
 
+    public TextView textToppings;
+
     public SpecialityPizzaViewHolder(@NonNull View itemView) {
         super(itemView);
         imagePizza = itemView.findViewById(R.id.imagePizza);
         textPizzaDetails = itemView.findViewById(R.id.textPizzaDetails);
+        textToppings = itemView.findViewById((R.id.textToppings));
     }
 }
