@@ -150,7 +150,6 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         });
 
 
-
         holder.btnAddToCart.setOnClickListener(view -> {
             // Get the selected pizza details
             Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
