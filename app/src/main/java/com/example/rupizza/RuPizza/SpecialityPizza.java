@@ -130,6 +130,8 @@ public class SpecialityPizza extends Pizza {
     public double total(){
         return calculateTax() + calculatePrice();
     }
+
+
     /**
      * Calculates the tax amount for the specialty pizza.
      *
@@ -150,14 +152,14 @@ public class SpecialityPizza extends Pizza {
         double sizePrice = calculateSizePrice();
         double extraSauceAndCheesePrice = calculateExtraSauceAndCheesePrice();
 
-        return basePrice + sizePrice + extraSauceAndCheesePrice;
+        return (basePrice + sizePrice + extraSauceAndCheesePrice) * quantity;
     }
     /**
      * Initializes the base prices for each pizza type
      *
      * @return The total price of the pizza.
      */
-    private double calculateBasePrice() {
+    public double calculateBasePrice() {
         return switch (pizzaType) {
             case DELUXE -> switch (size) {
                 case SMALL, MEDIUM, LARGE -> BASE_PRICE_DELUXE;
@@ -171,7 +173,7 @@ public class SpecialityPizza extends Pizza {
             case SEAFOOD -> switch (size) {
                 case SMALL, MEDIUM, LARGE -> BASE_PRICE_SEAFOOD;
             };
-            case PEPPERONI -> switch (size) {
+            case PEPPERONI, SHRIMP, HALAL, BUFFALO_CHICKEN, SALMON, CHEESE, MIX_GRILL-> switch (size) {
                 case SMALL, MEDIUM, LARGE -> BASE_PRICE_PEPPERONI;
             };
             default -> DEFAULT;
@@ -195,7 +197,6 @@ public class SpecialityPizza extends Pizza {
     private double calculateExtraSauceAndCheesePrice() {
         double extraSaucePrice = extraSauce ? EXTRA_SAUCE_AND_CHEESE_PRICE : DEFAULT;
         double extraCheesePrice = extraCheese ? EXTRA_SAUCE_AND_CHEESE_PRICE : DEFAULT;
-
         return extraSaucePrice + extraCheesePrice;
     }
 
@@ -204,12 +205,12 @@ public class SpecialityPizza extends Pizza {
      *
      * @return A string representation of the pizza.
      */
-
     @Override
     public String toString() {
         StringBuilder pizzaDetails = new StringBuilder();
         pizzaDetails.append("Order ID: ").append(orderID).append("\n");
         pizzaDetails.append("Pizza Type: ").append(pizzaType).append("\n");
+        pizzaDetails.append("Quantity: ").append(quantity).append("\n");
         pizzaDetails.append("Size: ").append(size).append("\n");
         if (extraCheese) {
             pizzaDetails.append("Extra Cheese: yes\n");
@@ -221,6 +222,7 @@ public class SpecialityPizza extends Pizza {
         } else {
             pizzaDetails.append("Extra Sauce: no\n");
         }
+        pizzaDetails.append("Toppings: ").append(getDefaultToppings(pizzaType).toString()).append("\n");
         pizzaDetails.append("Total Price: $").append(calculatePrice()).append("\n");
         pizzaDetails.append("Tax: $").append(calculateTax()).append("\n");
         pizzaDetails.append("Total: $").append(total()).append("\n");

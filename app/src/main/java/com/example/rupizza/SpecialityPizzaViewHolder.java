@@ -2,6 +2,7 @@ package com.example.rupizza;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,8 +20,9 @@ public class SpecialityPizzaViewHolder extends RecyclerView.ViewHolder {
     public Spinner spinnerSize;
     public CheckBox checkBoxExtraCheese;
     public CheckBox checkBoxExtraSauce;
-
-    public EditText editTextQuantity;
+    public Spinner spinnerQuantity;
+    public TextView textBasePrice;
+    public Button btnAddToCart;
 
     public SpecialityPizzaViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,8 +32,9 @@ public class SpecialityPizzaViewHolder extends RecyclerView.ViewHolder {
         spinnerSize = itemView.findViewById(R.id.spinnerSize);
         checkBoxExtraCheese = itemView.findViewById(R.id.checkBoxExtraCheese);
         checkBoxExtraSauce = itemView.findViewById(R.id.checkBoxExtraSauce);
-        editTextQuantity = itemView.findViewById(R.id.editTextQuantity);
-
+        spinnerQuantity = itemView.findViewById(R.id.spinnerQuantity);
+        btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
+        textBasePrice = itemView.findViewById(R.id.textBasePrice);
     }
 }
 

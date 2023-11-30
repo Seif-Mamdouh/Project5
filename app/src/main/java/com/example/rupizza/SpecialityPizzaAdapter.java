@@ -15,15 +15,17 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.rupizza.R;
+
+import com.example.rupizza.RuPizza.Order;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.Size;
-import com.example.rupizza.RuPizza.SpecialityPizza;
-import com.example.rupizza.SpecialityPizzaViewHolder;
 import com.bumptech.glide.Glide;
+import com.example.rupizza.RuPizza.SpecialityPizza;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizzaViewHolder> {
     private List<Pizza.PizzaType> pizzaList;
@@ -54,9 +56,9 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
         holder.textPizzaDetails.setText(pizzaType.toString());
 
-        List<String> toppings = getDefaultToppings(pizzaType);
-        if (toppings != null && !toppings.isEmpty()) {
-            holder.textToppings.setText("Toppings: " + TextUtils.join(", ", toppings));
+        AtomicReference<List<String>> toppings = new AtomicReference<>(getDefaultToppings(pizzaType));
+        if (toppings.get() != null && !toppings.get().isEmpty()) {
+            holder.textToppings.setText("Toppings: " + TextUtils.join(", ", toppings.get()));
         } else {
             holder.textToppings.setText("No toppings");
         }
@@ -72,12 +74,21 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
         // Handle spinner item selection
         holder.spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            private boolean userInteraction = true; // Flag to track user interaction
+
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selectedPosition, long id) {
-                // Do something when a size is selected
-                Size selectedSize = Size.values()[selectedPosition];
-                // You can perform actions based on the selected size
-                Log.d("SpecialityPizzaAdapter", "Selected size: " + selectedSize);
+                // Check if the change is due to user interaction
+                if (userInteraction) {
+                    // Do something when a size is selected
+                    Size selectedSize = Size.values()[selectedPosition];
+                    // Recalculate and update the base price
+                    double basePrice = calculateBasePrice(pizzaType, selectedSize, holder.checkBoxExtraCheese.isChecked(), holder.checkBoxExtraSauce.isChecked());
+                    holder.textBasePrice.setText("Base Price: $" + String.format("%.2f", basePrice));
+                }
+
+                // Reset the flag
+                userInteraction = true;
             }
 
             @Override
@@ -90,43 +101,142 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         holder.checkBoxExtraSauce.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Handle extra sauce checkbox state change
             Log.d("SpecialityPizzaAdapter", "Extra Sauce: " + isChecked);
+
+            // Recalculate and update the base price
+            Size pizzaSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
+            double basePrice = calculateBasePrice(pizzaType, pizzaSize, holder.checkBoxExtraCheese.isChecked(), isChecked);
+            holder.textBasePrice.setText("Base Price: $" + String.format("%.2f", basePrice));
         });
 
         holder.checkBoxExtraCheese.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Handle extra cheese checkbox state change
             Log.d("SpecialityPizzaAdapter", "Extra Cheese: " + isChecked);
+
+            // Recalculate and update the base price
+            Size pizzaSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
+            double basePrice = calculateBasePrice(pizzaType, pizzaSize, isChecked, holder.checkBoxExtraSauce.isChecked());
+            holder.textBasePrice.setText("Base Price: $" + String.format("%.2f", basePrice));
         });
 
 
-        // Handle quantity input
-        holder.editTextQuantity.addTextChangedListener(new TextWatcher() {
+
+        // Populate the quantity spinner
+        ArrayAdapter<Integer> quantityAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, getQuantityOptions());
+        quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        holder.spinnerQuantity.setAdapter(quantityAdapter);
+
+        // Set the selected quantity in the spinner
+        int selectedQuantityPosition = quantityAdapter.getPosition(1);
+        holder.spinnerQuantity.setSelection(selectedQuantityPosition);
+
+        // Handle quantity spinner item selection
+        holder.spinnerQuantity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-                // Not needed
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selectedPosition, long id) {
+                // Retrieve the selected size from the spinner
+                Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
+
+                int selectedQuantity = (int) holder.spinnerQuantity.getSelectedItem();
+
+                // Recalculate and update the total price
+                double total = calculateTotal(pizzaType, selectedSize, selectedQuantity, holder.checkBoxExtraCheese.isChecked(), holder.checkBoxExtraSauce.isChecked());
+                holder.textBasePrice.setText("Total Price: $" + String.format("%.2f", total));
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                // Handle quantity change
-                String quantityString = charSequence.toString();
-                if (!quantityString.isEmpty()) {
-                    int quantity = Integer.parseInt(quantityString);
-                    // You can perform actions based on the entered quantity
-                    Log.d("SpecialityPizzaAdapter", "Entered quantity: " + quantity);
-                }
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing if nothing is selected
             }
+        });
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                // Not needed
+
+        holder.btnAddToCart.setOnClickListener(view -> {
+            // Get the selected pizza details
+            Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
+            boolean extraCheese = holder.checkBoxExtraCheese.isChecked();
+            boolean extraSauce = holder.checkBoxExtraSauce.isChecked();
+            toppings.set(getDefaultToppings(pizzaType)); // Implement this method as needed
+            int quantity = (int) holder.spinnerQuantity.getSelectedItem(); // Assuming spinner is populated with Integer values
+
+            // Create a SpecialityPizza instance
+            Pizza selectedPizza = Pizza.createPizza(pizzaType, selectedSize, extraSauce, extraCheese, toppings.get(), quantity);
+
+            boolean addedToOrder = Order.getPizzaOrder().addPizza(selectedPizza);
+
+            if (addedToOrder) {
+                Log.d("SpecialityPizzaAdapter", "Added Pizza to Order: " + selectedPizza);
+            } else {
+                Log.e("SpecialityPizzaAdapter", "Failed to add Pizza to Order");
             }
         });
     }
 
 
+
     @Override
     public int getItemCount() {
         return pizzaList.size();
+    }
+
+    private double calculateTotal(Pizza.PizzaType pizzaType, Size size, int quantity, boolean extraCheese, boolean extraSauce) {
+        // Calculate the base price based on pizza type, size, and optional toppings
+        double basePrice = calculateBasePrice(pizzaType, size, extraCheese, extraSauce);
+
+        // Calculate the total price based on quantity
+        return basePrice * quantity;
+    }
+    private double calculateBasePrice(Pizza.PizzaType pizzaType, Size size, boolean extraCheese, boolean extraSauce) {
+        Log.d("SpecialityPizzaAdapter", "Calculating Base Price for Pizza Type: " + pizzaType + ", Size: " + size);
+
+        double basePrice;
+
+        switch (pizzaType) {
+            case DELUXE:
+                basePrice = switch (size) {
+                    case SMALL -> 14.99;
+                    case MEDIUM -> 14.99 + 2.0; // $2 extra for medium
+                    case LARGE -> 14.99 + 4.0; // $4 extra for large
+                };
+                break;
+            case SUPREME:
+                basePrice = switch (size) {
+                    case SMALL -> 15.99;
+                    case MEDIUM -> 15.99 + 2.0;
+                    case LARGE -> 15.99 + 4.0;
+                };
+            case MEATZZA:
+                basePrice = switch (size) {
+                    case SMALL -> 16.99;
+                    case MEDIUM -> 16.99 + 2.0;
+                    case LARGE -> 16.99 + 4.0;
+                };
+            case SEAFOOD:
+                basePrice = switch (size) {
+                    case SMALL -> 17.99;
+                    case MEDIUM -> 17.99 + 2.0;
+                    case LARGE -> 17.99 + 4.0;
+                };
+                break;
+            case PEPPERONI, SHRIMP, HALAL, BUFFALO_CHICKEN, SALMON, CHEESE, MIX_GRILL:
+                        basePrice = switch (size) {
+                            case SMALL -> 10.99;
+                            case MEDIUM -> 10.99 + 2.0;
+                            case LARGE -> 10.99 + 4.0;
+                        };
+                break;
+            default:
+                basePrice = 0.0;
+        }
+
+        if (extraCheese) {
+            basePrice += 1.0;
+        }
+
+        if (extraSauce) {
+            basePrice += 1.0;
+        }
+
+        return basePrice;
     }
 
 
@@ -162,5 +272,13 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
             default:
                 return R.drawable.ic_launcher_background;
         }
+    }
+
+    private List<Integer> getQuantityOptions() {
+        List<Integer> options = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            options.add(i);
+        }
+        return options;
     }
 }
