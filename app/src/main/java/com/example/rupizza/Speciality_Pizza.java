@@ -45,26 +45,6 @@ public class Speciality_Pizza extends AppCompatActivity {
     }
 
 
-
-//    private List<Pizza> createPizzaList() {
-//        List<Pizza> list = new ArrayList<>();
-//        // Add pizzas using a loop or any other approach
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.DELUXE, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.SUPREME, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.MEATZZA, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.SEAFOOD, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.PEPPERONI, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.HALAL, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.CHEESE, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.MIX_GRILL, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.SALMON, Size.SMALL, false, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.SHRIMP, Size.SMALL, true, false, new ArrayList<>(), 1));
-//        list.add(PizzaMaker.createPizza(Pizza.PizzaType.BUFFALO_CHICKEN, Size.SMALL, true, false, new ArrayList<>(), 1));
-//
-//        return list;
-//    }
-
-
     private List<Pizza.PizzaType> createPizzaList (){
         List <Pizza.PizzaType> list = new ArrayList<>();
 
