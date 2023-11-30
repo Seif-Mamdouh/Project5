@@ -159,7 +159,7 @@ public class SpecialityPizza extends Pizza {
      *
      * @return The total price of the pizza.
      */
-    private double calculateBasePrice() {
+    public double calculateBasePrice() {
         return switch (pizzaType) {
             case DELUXE -> switch (size) {
                 case SMALL, MEDIUM, LARGE -> BASE_PRICE_DELUXE;

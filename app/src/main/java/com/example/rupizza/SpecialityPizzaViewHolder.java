@@ -20,7 +20,8 @@ public class SpecialityPizzaViewHolder extends RecyclerView.ViewHolder {
     public Spinner spinnerSize;
     public CheckBox checkBoxExtraCheese;
     public CheckBox checkBoxExtraSauce;
-    Spinner spinnerQuantity;
+    public Spinner spinnerQuantity;
+    public TextView textBasePrice;
     public Button btnAddToCart;
 
     public SpecialityPizzaViewHolder(@NonNull View itemView) {
@@ -33,6 +34,7 @@ public class SpecialityPizzaViewHolder extends RecyclerView.ViewHolder {
         checkBoxExtraSauce = itemView.findViewById(R.id.checkBoxExtraSauce);
         spinnerQuantity = itemView.findViewById(R.id.spinnerQuantity);
         btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
+        textBasePrice = itemView.findViewById(R.id.textBasePrice);
     }
 }
 
