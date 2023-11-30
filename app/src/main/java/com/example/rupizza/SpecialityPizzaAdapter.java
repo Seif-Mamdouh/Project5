@@ -15,15 +15,14 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.rupizza.R;
+
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.Size;
-import com.example.rupizza.RuPizza.SpecialityPizza;
-import com.example.rupizza.SpecialityPizzaViewHolder;
 import com.bumptech.glide.Glide;
 
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizzaViewHolder> {
     private List<Pizza.PizzaType> pizzaList;
@@ -54,9 +53,9 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
         holder.textPizzaDetails.setText(pizzaType.toString());
 
-        List<String> toppings = getDefaultToppings(pizzaType);
-        if (toppings != null && !toppings.isEmpty()) {
-            holder.textToppings.setText("Toppings: " + TextUtils.join(", ", toppings));
+        AtomicReference<List<String>> toppings = new AtomicReference<>(getDefaultToppings(pizzaType));
+        if (toppings.get() != null && !toppings.get().isEmpty()) {
+            holder.textToppings.setText("Toppings: " + TextUtils.join(", ", toppings.get()));
         } else {
             holder.textToppings.setText("No toppings");
         }
@@ -121,7 +120,25 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
                 // Not needed
             }
         });
+
+
+        holder.btnAddToCart.setOnClickListener(view -> {
+            // Get the selected pizza details
+            Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
+            boolean extraCheese = holder.checkBoxExtraCheese.isChecked();
+            boolean extraSauce = holder.checkBoxExtraSauce.isChecked();
+            toppings.set(getDefaultToppings(pizzaType)); // Implement this method as needed
+            int quantity = Integer.parseInt(holder.editTextQuantity.getText().toString());
+
+            // Create a SpecialityPizza instance
+            Pizza selectedPizza = Pizza.createPizza(pizzaType, selectedSize, extraSauce, extraCheese, toppings.get(), quantity);
+
+            // Do something with the created pizza, e.g., add it to the cart or perform an action
+            // For now, let's just log the details
+            Log.d("SpecialityPizzaAdapter", "Added Pizza to Cart: " + selectedPizza);
+        });
     }
+
 
 
     @Override

@@ -204,12 +204,12 @@ public class SpecialityPizza extends Pizza {
      *
      * @return A string representation of the pizza.
      */
-
     @Override
     public String toString() {
         StringBuilder pizzaDetails = new StringBuilder();
         pizzaDetails.append("Order ID: ").append(orderID).append("\n");
         pizzaDetails.append("Pizza Type: ").append(pizzaType).append("\n");
+        pizzaDetails.append("Quantity: ").append(quantity).append("\n");
         pizzaDetails.append("Size: ").append(size).append("\n");
         if (extraCheese) {
             pizzaDetails.append("Extra Cheese: yes\n");
