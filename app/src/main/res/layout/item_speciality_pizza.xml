@@ -27,6 +27,7 @@
             android:textSize="18sp" />
 
         <!-- Add a TextView for displaying toppings -->
+
         <TextView
             android:id="@+id/textToppings"
             android:layout_width="230dp"
@@ -54,6 +55,14 @@
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="Extra Sauce" />
+
+        <EditText
+            android:id="@+id/editTextQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Quantity"
+            />
 
 
     </LinearLayout>
