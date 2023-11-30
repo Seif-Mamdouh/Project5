@@ -130,6 +130,8 @@ public class SpecialityPizza extends Pizza {
     public double total(){
         return calculateTax() + calculatePrice();
     }
+
+
     /**
      * Calculates the tax amount for the specialty pizza.
      *
@@ -150,7 +152,7 @@ public class SpecialityPizza extends Pizza {
         double sizePrice = calculateSizePrice();
         double extraSauceAndCheesePrice = calculateExtraSauceAndCheesePrice();
 
-        return basePrice + sizePrice + extraSauceAndCheesePrice;
+        return (basePrice + sizePrice + extraSauceAndCheesePrice) * quantity;
     }
     /**
      * Initializes the base prices for each pizza type
