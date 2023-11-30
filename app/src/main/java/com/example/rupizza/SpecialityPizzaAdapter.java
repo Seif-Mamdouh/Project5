@@ -1,5 +1,7 @@
 package com.example.rupizza;
 
+import static com.example.rupizza.RuPizza.Pizza.getDefaultToppings;
+
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,10 +24,10 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizzaViewHolder> {
-    private List<Pizza> pizzaList;
+    private List<Pizza.PizzaType> pizzaList;
     private Context context;
 
-    public SpecialityPizzaAdapter(List<Pizza> pizzaList, Context context) {
+    public SpecialityPizzaAdapter(List<Pizza.PizzaType> pizzaList, Context context) {
         this.pizzaList = pizzaList;
         this.context = context;
     }
@@ -37,58 +39,45 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         return new SpecialityPizzaViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull SpecialityPizzaViewHolder holder, int position) {
-        SpecialityPizza pizza = (SpecialityPizza) pizzaList.get(position);
+        Pizza.PizzaType pizzaType = pizzaList.get(position);
 
-        // Load pizza image using Glide
+        // Load pizza image using Glide or any other image loading library
         Glide.with(context)
-                .load(getPizzaImageResource(pizza.getPizzaType()))
-                .placeholder(R.drawable.pizza)
+                .load(getPizzaImageResource(pizzaType))
+                .placeholder(R.drawable.pizza) // Use a default image or placeholder
                 .into(holder.imagePizza);
 
-        // Display pizza type
-        holder.textPizzaDetails.setText(pizza.getPizzaType().toString());
+        holder.textPizzaDetails.setText(pizzaType.toString());
 
-        // Display toppings
-        List<String> toppings = pizza.getToppings();
-        if (toppings == null || toppings.isEmpty()) {
-            // If toppings list is not provided, use default toppings
-            toppings = Pizza.getDefaultToppings(pizza.getPizzaType());
-        }
 
+        List<String> toppings = getDefaultToppings(pizzaType);
         if (toppings != null && !toppings.isEmpty()) {
             holder.textToppings.setText("Toppings: " + TextUtils.join(", ", toppings));
         } else {
             holder.textToppings.setText("No toppings");
         }
 
+
+        // Populate the spinner with available sizes
         ArrayAdapter<Size> sizeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, Size.values());
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinnerSize.setAdapter(sizeAdapter);
 
-
-        holder.checkBoxExtraCheese.setChecked(pizza.isExtraCheese());
-        holder.checkBoxExtraSauce.setChecked(pizza.isExtraSauce());
+        // Set the selected size in the spinner
+        int selectedSizePosition = sizeAdapter.getPosition(Size.SMALL); // Set a default size
+        holder.spinnerSize.setSelection(selectedSizePosition);
 
         // Handle spinner item selection
         holder.spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selectedPosition, long id) {
-                // Create a SpecialityPizza with the selected size
+                // Do something when a size is selected
                 Size selectedSize = Size.values()[selectedPosition];
-                Pizza selectedPizza = Pizza.createPizza(
-                        pizza.getPizzaType(),
-                        selectedSize,
-                        pizza.isExtraSauce(),
-                        pizza.isExtraCheese(),
-                        pizza.getToppings(),
-                        pizza.getQuantity()
-                );
-
-                // Do something with the selected pizza, e.g., update the data set or perform an action
-                // For now, let's just log the details
-                Log.d("SpecialityPizzaAdapter", "Selected Pizza: " + selectedPizza);
+                // You can perform actions based on the selected size
+                Log.d("SpecialityPizzaAdapter", "Selected size: " + selectedSize);
             }
 
             @Override
@@ -96,7 +85,79 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
                 // Do nothing if nothing is selected
             }
         });
+
+        // Handle checkbox states
+        holder.checkBoxExtraSauce.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Handle extra sauce checkbox state change
+            Log.d("SpecialityPizzaAdapter", "Extra Sauce: " + isChecked);
+        });
+
+        holder.checkBoxExtraCheese.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Handle extra cheese checkbox state change
+            Log.d("SpecialityPizzaAdapter", "Extra Cheese: " + isChecked);
+        });
     }
+
+//    @Override
+//    public void onBindViewHolder(@NonNull SpecialityPizzaViewHolder holder, int position) {
+//        SpecialityPizza pizza = (SpecialityPizza) pizzaList.get(position);
+//
+//        // Load pizza image using Glide
+//        Glide.with(context)
+//                .load(getPizzaImageResource(pizza.getPizzaType()))
+//                .placeholder(R.drawable.pizza)
+//                .into(holder.imagePizza);
+//
+//        // Display pizza type
+//        holder.textPizzaDetails.setText(pizza.getPizzaType().toString());
+//
+//        // Display toppings
+//        List<String> toppings = pizza.getToppings();
+//        if (toppings == null || toppings.isEmpty()) {
+//            // If toppings list is not provided, use default toppings
+//            toppings = Pizza.getDefaultToppings(pizza.getPizzaType());
+//        }
+//
+//        if (toppings != null && !toppings.isEmpty()) {
+//            holder.textToppings.setText("Toppings: " + TextUtils.join(", ", toppings));
+//        } else {
+//            holder.textToppings.setText("No toppings");
+//        }
+//
+//        ArrayAdapter<Size> sizeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, Size.values());
+//        sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        holder.spinnerSize.setAdapter(sizeAdapter);
+//
+//
+//        holder.checkBoxExtraCheese.setChecked(pizza.isExtraCheese());
+//        holder.checkBoxExtraSauce.setChecked(pizza.isExtraSauce());
+//
+//        // Handle spinner item selection
+//        holder.spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selectedPosition, long id) {
+//                // Create a SpecialityPizza with the selected size
+//                Size selectedSize = Size.values()[selectedPosition];
+//                Pizza selectedPizza = Pizza.createPizza(
+//                        pizza.getPizzaType(),
+//                        selectedSize,
+//                        pizza.isExtraSauce(),
+//                        pizza.isExtraCheese(),
+//                        pizza.getToppings(),
+//                        pizza.getQuantity()
+//                );
+//
+//                // Do something with the selected pizza, e.g., update the data set or perform an action
+//                // For now, let's just log the details
+//                Log.d("SpecialityPizzaAdapter", "Selected Pizza: " + selectedPizza);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parentView) {
+//                // Do nothing if nothing is selected
+//            }
+//        });
+//    }
 
 
     @Override

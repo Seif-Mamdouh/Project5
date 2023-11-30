@@ -40,7 +40,6 @@ public abstract class Pizza {
 
     }
 
-
     public List<String> getToppings() {
         return toppings;
     }
@@ -95,7 +94,7 @@ public abstract class Pizza {
     public abstract Size getSize();
 
     // Add this method to get default toppings for each pizza type
-    public static List<String> getDefaultToppings(PizzaType pizzaType) {
+    public static List<String> getDefaultToppings(Pizza.PizzaType pizzaType) {
         Map<PizzaType, List<String>> defaultToppingsMap = new HashMap<>();
         // Define default toppings for each pizza type
         defaultToppingsMap.put(PizzaType.DELUXE, List.of("Mushrooms", "Pepperoni", "Green Peppers"));
@@ -120,15 +119,6 @@ public abstract class Pizza {
      * @param size        The size of the pizza to create.
      * @param extraSauce  Indicates whether extra sauce should be added to the pizza.
      * @param extraCheese Indicates whether extra cheese should be added to the pizza.
-     * @return A new pizza instance based on the provided parameters.
-     */
-    /**
-     * Factory method to create a pizza based on the specified pizza type, size, and additional options.
-     *
-     * @param pizzaType   The type of the pizza to create.
-     * @param size        The size of the pizza to create.
-     * @param extraSauce  Indicates whether extra sauce should be added to the pizza.
-     * @param extraCheese Indicates whether extra cheese should be added to the pizza.
      * @param toppings    The toppings to add to the pizza.
      * @param quantity    The quantity of pizzas to create.
      * @return A new pizza instance based on the provided parameters.
@@ -139,7 +129,6 @@ public abstract class Pizza {
             case BUILD_YOUR_OWN -> new BuildYourOwnPizza(pizzaType, size, extraSauce, extraCheese, toppings, quantity);
         };
     }
-
 
     /**
      * Abstract method to be implemented by subclasses for calculating the price of the pizza.
