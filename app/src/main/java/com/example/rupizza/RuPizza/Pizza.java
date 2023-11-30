@@ -1,6 +1,9 @@
 package com.example.rupizza.RuPizza;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract class representing a pizza in the pizza ordering system.
@@ -15,6 +18,14 @@ public abstract class Pizza {
     protected boolean extraSauce;
     protected boolean extraCheese;
 
+    protected int quantity;
+
+    /**
+     * Get the type of the pizza.
+     *
+     * @return The pizza type.
+     */
+    public abstract PizzaType getPizzaType();
     /**
      * Abstract method to set the order ID for a pizza.
      *
@@ -29,28 +40,76 @@ public abstract class Pizza {
 
     }
 
+    public List<String> getToppings() {
+        return toppings;
+    }
+
+    public void setSize(Size item) {
+    }
+
     /**
      * Enum For Pizza Types
      */
     public enum PizzaType {
-        DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, BUILD_YOUR_OWN
+        DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, HALAL, CHEESE, MIX_GRILL, SALMON, SHRIMP, BUFFALO_CHICKEN, BUILD_YOUR_OWN
     }
 
     /**
-     * Constructor for creating a pizza with specified toppings, size, sauce, and additional options.
+     * Constructor for creating a pizza with specified toppings, size, sauce, additional options, and quantity.
      *
      * @param toppings    The toppings to add to the pizza.
      * @param size        The size of the pizza.
-     * @param sauce       The sauce type for the pizza.
      * @param extraSauce  Indicates whether extra sauce should be added to the pizza.
      * @param extraCheese Indicates whether extra cheese should be added to the pizza.
+     * @param quantity    The quantity of pizzas.
      */
-    public Pizza(ArrayList<String> toppings, Size size, Sauce sauce, boolean extraSauce, boolean extraCheese) {
-        this.toppings = toppings;
+    public Pizza(List<String> toppings, Size size, boolean extraSauce, boolean extraCheese, int quantity) {
+        this.toppings = new ArrayList<>(toppings);
         this.size = size;
-        this.sauce = sauce;
         this.extraSauce = extraSauce;
         this.extraCheese = extraCheese;
+        this.quantity = quantity;
+    }
+
+    /**
+     * Get the quantity of the pizza.
+     *
+     * @return The quantity of the pizza.
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+
+    public boolean isExtraCheese() {
+        return extraCheese;
+    }
+
+    public boolean isExtraSauce() {
+        return extraSauce;
+    }
+
+
+    // Abstract method to get the size
+    public abstract Size getSize();
+
+    // Add this method to get default toppings for each pizza type
+    public static List<String> getDefaultToppings(Pizza.PizzaType pizzaType) {
+        Map<PizzaType, List<String>> defaultToppingsMap = new HashMap<>();
+        // Define default toppings for each pizza type
+        defaultToppingsMap.put(PizzaType.DELUXE, List.of("Mushrooms", "Pepperoni", "Green Peppers"));
+        defaultToppingsMap.put(PizzaType.SUPREME, List.of("Sausage", "Black Olives", "Onions"));
+        defaultToppingsMap.put(PizzaType.MEATZZA, List.of("Bacon"));
+        defaultToppingsMap.put(PizzaType.SEAFOOD, List.of("Shrimp"));
+        defaultToppingsMap.put(PizzaType.PEPPERONI, List.of("Pepporini", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.HALAL, List.of("ALL HALAL"));
+        defaultToppingsMap.put(PizzaType.CHEESE, List.of("Mixed Cheeses"));
+        defaultToppingsMap.put(PizzaType.MIX_GRILL, List.of("MIx Grill"));
+        defaultToppingsMap.put(PizzaType.SALMON, List.of("Salmon"));
+        defaultToppingsMap.put(PizzaType.SHRIMP, List.of("Shrimp"));
+        defaultToppingsMap.put(PizzaType.BUFFALO_CHICKEN, List.of("Buffalo Sauce", "Buffolo Chicken", "Tomato Sauce"));
+
+        return defaultToppingsMap.getOrDefault(pizzaType, new ArrayList<>());
     }
 
     /**
@@ -60,12 +119,14 @@ public abstract class Pizza {
      * @param size        The size of the pizza to create.
      * @param extraSauce  Indicates whether extra sauce should be added to the pizza.
      * @param extraCheese Indicates whether extra cheese should be added to the pizza.
+     * @param toppings    The toppings to add to the pizza.
+     * @param quantity    The quantity of pizzas to create.
      * @return A new pizza instance based on the provided parameters.
      */
-    public static Pizza createPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese) {
+    public static Pizza createPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese, List<String> toppings, int quantity) {
         return switch (pizzaType) {
-            case DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI -> new SpecialityPizza(pizzaType, size, extraSauce, extraCheese);
-            case BUILD_YOUR_OWN -> new BuildYourOwnPizza(size, extraSauce, extraCheese, new ArrayList<>());
+            case DELUXE, SUPREME, MEATZZA, SEAFOOD, PEPPERONI, HALAL, BUFFALO_CHICKEN, CHEESE, MIX_GRILL, SALMON, SHRIMP -> new SpecialityPizza(pizzaType, size, extraSauce, extraCheese, toppings, quantity);
+            case BUILD_YOUR_OWN -> new BuildYourOwnPizza(pizzaType, size, extraSauce, extraCheese, toppings, quantity);
         };
     }
 

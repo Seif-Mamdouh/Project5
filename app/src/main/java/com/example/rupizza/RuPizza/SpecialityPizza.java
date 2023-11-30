@@ -1,6 +1,9 @@
 package com.example.rupizza.RuPizza;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a specialty pizza in the pizza ordering system, extending the base Pizza class.
  * Manages details such as pizza type, size, and additional toppings like extra sauce and cheese.
@@ -63,7 +66,7 @@ public class SpecialityPizza extends Pizza {
      */
     private static final double SIZE_PRICE_MEDIUM = 2.0;
 
-    /**
+    /**tty
      * The additional price for a large-sized pizza.
      */
     private static final double SIZE_PRICE_LARGE = 4.0;
@@ -81,11 +84,23 @@ public class SpecialityPizza extends Pizza {
      * @param extraSauce  Indicates whether extra sauce is added.
      * @param extraCheese Indicates whether extra cheese is added.
      */
-    public SpecialityPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese) {
+    public SpecialityPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese, List<String> toppings, int quantity) {
+        super(toppings, size, extraSauce, extraCheese, quantity);
         this.pizzaType = pizzaType;
-        this.size = size;
-        this.extraSauce = extraSauce;
-        this.extraCheese = extraCheese;
+    }
+
+
+    @Override
+    public PizzaType getPizzaType() {
+        return pizzaType;
+    }
+
+
+    // Implement the abstract method to get the size
+    @Override
+    public Size getSize() {
+        // Return the size specific to SpecialityPizza
+        return this.size;
     }
 
     /**

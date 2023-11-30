@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="384dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imagePizza"
+            android:layout_width="177dp"
+            android:layout_height="162dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/textPizzaDetails"
+            android:layout_width="243dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="18sp" />
+
+        <!-- Add a TextView for displaying toppings -->
+
+        <TextView
+            android:id="@+id/textToppings"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spinnerSize"
+            android:layout_width="222dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textPizzaDetails"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkBoxExtraCheese"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Extra Cheese" />
+
+        <CheckBox
+            android:id="@+id/checkBoxExtraSauce"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Extra Sauce" />
+
+        <EditText
+            android:id="@+id/editTextQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Quantity"
+            />
+
+
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+<!--     If you want to add ripple effect on click, uncomment the following line -->
+<!--     app:cardUseCompatPadding="true" -->
+
+<!--     If you want to set a specific color for the card background, uncomment the following line -->
+<!--     app:cardBackgroundColor="@color/your_color_here"-->

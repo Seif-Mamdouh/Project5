@@ -10,6 +10,8 @@ import java.util.List;
  */
 
 public class BuildYourOwnPizza extends Pizza {
+
+    private PizzaType pizzaType;
     /**
      * The base price for a small pizza.
      */
@@ -45,12 +47,19 @@ public class BuildYourOwnPizza extends Pizza {
      * @param extraSauce  Indicates whether extra sauce is added to the pizza.
      * @param extraCheese Indicates whether extra cheese is added to the pizza.
      * @param toppings    The list of toppings chosen for the pizza.
+     * @param quantity
      */
-    public BuildYourOwnPizza(Size size, boolean extraSauce, boolean extraCheese, List<String> toppings) {
+    public BuildYourOwnPizza(PizzaType pizzaType, Size size, boolean extraSauce, boolean extraCheese, List<String> toppings, int quantity) {
+        this.pizzaType = pizzaType;
         this.size = size;
         this.extraSauce = extraSauce;
         this.extraCheese = extraCheese;
         this.toppings = toppings;
+    }
+
+    @Override
+    public PizzaType getPizzaType() {
+        return pizzaType;
     }
 
     /**
@@ -144,6 +153,11 @@ public class BuildYourOwnPizza extends Pizza {
 
     public List<String> getToppings() {
         return toppings;
+    }
+
+    @Override
+    public Size getSize() {
+        return null;
     }
 
 
