@@ -171,7 +171,7 @@ public class SpecialityPizza extends Pizza {
             case SEAFOOD -> switch (size) {
                 case SMALL, MEDIUM, LARGE -> BASE_PRICE_SEAFOOD;
             };
-            case PEPPERONI -> switch (size) {
+            case PEPPERONI, SHRIMP, HALAL, BUFFALO_CHICKEN, SALMON, CHEESE, MIX_GRILL-> switch (size) {
                 case SMALL, MEDIUM, LARGE -> BASE_PRICE_PEPPERONI;
             };
             default -> DEFAULT;
@@ -195,7 +195,6 @@ public class SpecialityPizza extends Pizza {
     private double calculateExtraSauceAndCheesePrice() {
         double extraSaucePrice = extraSauce ? EXTRA_SAUCE_AND_CHEESE_PRICE : DEFAULT;
         double extraCheesePrice = extraCheese ? EXTRA_SAUCE_AND_CHEESE_PRICE : DEFAULT;
-
         return extraSaucePrice + extraCheesePrice;
     }
 
@@ -221,6 +220,7 @@ public class SpecialityPizza extends Pizza {
         } else {
             pizzaDetails.append("Extra Sauce: no\n");
         }
+        pizzaDetails.append("Toppings: ").append(getDefaultToppings(pizzaType).toString()).append("\n");
         pizzaDetails.append("Total Price: $").append(calculatePrice()).append("\n");
         pizzaDetails.append("Tax: $").append(calculateTax()).append("\n");
         pizzaDetails.append("Total: $").append(total()).append("\n");

@@ -21,6 +21,7 @@ import com.example.rupizza.RuPizza.Size;
 import com.bumptech.glide.Glide;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -97,29 +98,14 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         });
 
 
-        // Handle quantity input
-        holder.editTextQuantity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-                // Not needed
-            }
+        // Populate the quantity spinner
+        ArrayAdapter<Integer> quantityAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, getQuantityOptions());
+        quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        holder.spinnerQuantity.setAdapter(quantityAdapter);
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                // Handle quantity change
-                String quantityString = charSequence.toString();
-                if (!quantityString.isEmpty()) {
-                    int quantity = Integer.parseInt(quantityString);
-                    // You can perform actions based on the entered quantity
-                    Log.d("SpecialityPizzaAdapter", "Entered quantity: " + quantity);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                // Not needed
-            }
-        });
+        // Set the selected quantity in the spinner
+        int selectedQuantityPosition = quantityAdapter.getPosition(1);
+        holder.spinnerQuantity.setSelection(selectedQuantityPosition);
 
 
         holder.btnAddToCart.setOnClickListener(view -> {
@@ -128,13 +114,12 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
             boolean extraCheese = holder.checkBoxExtraCheese.isChecked();
             boolean extraSauce = holder.checkBoxExtraSauce.isChecked();
             toppings.set(getDefaultToppings(pizzaType)); // Implement this method as needed
-            int quantity = Integer.parseInt(holder.editTextQuantity.getText().toString());
+            int quantity = (int) holder.spinnerQuantity.getSelectedItem(); // Assuming spinner is populated with Integer values
 
             // Create a SpecialityPizza instance
             Pizza selectedPizza = Pizza.createPizza(pizzaType, selectedSize, extraSauce, extraCheese, toppings.get(), quantity);
 
-            // Do something with the created pizza, e.g., add it to the cart or perform an action
-            // For now, let's just log the details
+            // Do something with the created pizza, add to OrderClass
             Log.d("SpecialityPizzaAdapter", "Added Pizza to Cart: " + selectedPizza);
         });
     }
@@ -179,5 +164,13 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
             default:
                 return R.drawable.ic_launcher_background;
         }
+    }
+
+    private List<Integer> getQuantityOptions() {
+        List<Integer> options = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            options.add(i);
+        }
+        return options;
     }
 }
