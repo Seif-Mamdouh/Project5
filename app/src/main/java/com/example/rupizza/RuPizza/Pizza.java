@@ -33,6 +33,8 @@ public abstract class Pizza {
      */
     public abstract void setOrderID(int orderID);
 
+    public abstract void getOrderID(int orderID);
+
     /**
      * Default constructor for the Pizza class.
      */

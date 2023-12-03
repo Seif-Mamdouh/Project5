@@ -1,20 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
     tools:context=".CurrentOrder">
 
+
+    <Spinner
+        android:id="@+id/spinnerOrderIDs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="31dp" />
+
+    <ListView
+        android:id="@+id/listViewOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="483dp"
+        android:layout_below="@id/spinnerOrderIDs"
+        android:layout_marginTop="15dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp"></ListView>
+
+    <Button
+        android:id="@+id/btnRemoveOrder"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerOrderIDs"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="529dp"
+        android:layout_marginEnd="242dp"
+        android:onClick="removeOrder"
+        android:text="Remove Order" />
+
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="166dp"
-        android:layout_height="52dp"
-        android:text="Current Order"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.556" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/totalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnRemoveOrder"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/taxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalPrice"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taxPrice"
+        android:text="TextView" />
+</RelativeLayout>

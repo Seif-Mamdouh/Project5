@@ -2,7 +2,13 @@ package com.example.rupizza.RuPizza;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Represents the order for pizzas in the pizza ordering system.
@@ -15,12 +21,14 @@ import java.util.List;
 
 public class Order {
     private static Order pizzaOrder = new Order();  // Singleton instance
-    private List<Pizza> pizzas;
+    private static List<Pizza> pizzas;
     private static int orderIDCounter = 1;
 
     private static int nextStoreID = 1;
 
     private int storeID;
+
+    private Map<Pizza, Integer> pizzaOrderIDs;
 
 
     /**
@@ -29,8 +37,11 @@ public class Order {
      */
     private Order() {
         this.pizzas = new ArrayList<>();
+        this.pizzaOrderIDs = new HashMap<>();
         this.storeID = nextStoreID++;
     }
+
+
     /**
      * Retrieves the singleton instance of the Order.
      *
@@ -69,13 +80,21 @@ public class Order {
      *
      * @return The List containing the pizzas in the order.
      */
-    public List<Pizza> getPizzas() {
+    public static List<Pizza> getPizzas() {
         return pizzas;
     }
 
-
-    public int getStoreID() {
-        return storeID;
+    public List<Integer> getOrderIDs() {
+        Set<Integer> uniqueOrderIDs = new HashSet<>();
+        for (Pizza pizza : pizzas) {
+            if (pizza instanceof SpecialityPizza) {
+                uniqueOrderIDs.add(((SpecialityPizza) pizza).getPizzaID());
+            }
+        }
+        return new ArrayList<>(uniqueOrderIDs);
     }
 
+
 }
+
+
