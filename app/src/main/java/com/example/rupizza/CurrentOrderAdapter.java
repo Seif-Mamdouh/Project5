@@ -12,8 +12,14 @@ import java.util.List;
 public class CurrentOrderAdapter extends BaseAdapter {
 
     private List<Pizza> pizzas;
+    private List<Pizza> originalPizzas;  // Store the original list of pizzas
+
 
     public CurrentOrderAdapter(List<Pizza> pizzas) {
+        this.originalPizzas = pizzas;
+        this.pizzas = pizzas;
+    }
+    public void setPizzas(List<Pizza> pizzas) {
         this.pizzas = pizzas;
     }
 
@@ -32,13 +38,13 @@ public class CurrentOrderAdapter extends BaseAdapter {
         return position;
     }
 
+    public void setOriginalPizzas(List<Pizza> pizzas) {
+        this.originalPizzas = pizzas;
+        notifyDataSetChanged();  // Notify the adapter that the data set has changed
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Implement the view for each item in the ListView
-        // You might want to inflate a custom layout for each item
-        // and populate it with the pizza details
-
-        // Example:
         TextView textView = new TextView(parent.getContext());
         textView.setText(pizzas.get(position).toString());
         return textView;

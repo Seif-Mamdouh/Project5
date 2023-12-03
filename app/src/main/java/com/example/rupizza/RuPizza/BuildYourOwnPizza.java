@@ -72,6 +72,11 @@ public class BuildYourOwnPizza extends Pizza {
         this.orderID = orderID;
     }
 
+    @Override
+    public void getOrderID(int orderID) {
+
+    }
+
     /**
      * Retrieves the order ID of the specialty pizza.
      *

@@ -81,50 +81,50 @@ public class StoreOrders {
      * Writes orders to file parameter.
      * @param file pointer to file to write to
      */
-    public void exportTo(File file) {
-        FileWriter exporter = null;
-        try {
-            exporter = new FileWriter(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(mapping.isEmpty())
-        {
-            try {
-                exporter.write("No Orders Currently In System");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            for(Order order:mapping.values())
-            {
-
-                try {
-                    String toWrite = "Store ID: " + order.getStoreID() + "\n";
-                    exporter.write(toWrite);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                for(Object m : order.getPizzas())
-                {
-                    try {
-                        String toWriteItem = "\t" + m.toString() + "\n";
-                        exporter.write(toWriteItem);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-        try {
-            exporter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public void exportTo(File file) {
+//        FileWriter exporter = null;
+//        try {
+//            exporter = new FileWriter(file);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        if(mapping.isEmpty())
+//        {
+//            try {
+//                exporter.write("No Orders Currently In System");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        else
+//        {
+//            for(Order order:mapping.values())
+//            {
+//
+//                try {
+//                    String toWrite = "Store ID: " + order.getStoreID() + "\n";
+//                    exporter.write(toWrite);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                for(Object m : order.getPizzas())
+//                {
+//                    try {
+//                        String toWriteItem = "\t" + m.toString() + "\n";
+//                        exporter.write(toWriteItem);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//        try {
+//            exporter.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     /**
      * Calculates the total cost of pizzas in the given order.

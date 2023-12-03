@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,10 +10,21 @@
     android:paddingBottom="16dp"
     tools:context=".CurrentOrder">
 
+
+
+    <Spinner
+        android:id="@+id/spinnerOrderIDs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="69dp" />
+
     <ListView
         android:id="@+id/listViewOrder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="483dp"
+        android:layout_below="@id/spinnerOrderIDs"
+        android:layout_marginTop="15dp"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp" />
+        android:dividerHeight="0.5dp"></ListView>
 </RelativeLayout>
