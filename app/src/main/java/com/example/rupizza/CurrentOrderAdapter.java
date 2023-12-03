@@ -12,8 +12,11 @@ import java.util.List;
 public class CurrentOrderAdapter extends BaseAdapter {
 
     private List<Pizza> pizzas;
-    private List<Pizza> originalPizzas;  // Store the original list of pizzas
+    private List<Pizza> originalPizzas;
 
+    private TextView textViewTotalPrice;
+    private TextView textViewTax;
+    private TextView textViewTotal;
 
     public CurrentOrderAdapter(List<Pizza> pizzas) {
         this.originalPizzas = pizzas;

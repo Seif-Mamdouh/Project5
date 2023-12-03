@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="47dp" />
+        android:layout_marginTop="31dp" />
 
     <ListView
         android:id="@+id/listViewOrder"
@@ -37,4 +37,25 @@
         android:layout_marginEnd="242dp"
         android:onClick="removeOrder"
         android:text="Remove Order" />
+
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnRemoveOrder"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/taxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalPrice"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taxPrice"
+        android:text="TextView" />
 </RelativeLayout>

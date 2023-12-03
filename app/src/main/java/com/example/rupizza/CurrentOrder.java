@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +24,10 @@ public class CurrentOrder extends AppCompatActivity {
     private ListView listView;
     private Spinner spinnerOrderIDs; // Add spinner for Order IDs
     private CurrentOrderAdapter currentOrderAdapter;
-    private Button btnRemoveOrder; // Add Button for removing orders
+    private Button btnRemoveOrder;
+    private TextView textViewTotalPrice;
+    private TextView textViewTax;
+    private TextView textViewTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,9 @@ public class CurrentOrder extends AppCompatActivity {
         listView = findViewById(R.id.listViewOrder);
         spinnerOrderIDs = findViewById(R.id.spinnerOrderIDs);
         btnRemoveOrder = findViewById(R.id.btnRemoveOrder);
+        textViewTotalPrice = findViewById(R.id.totalPrice);
+        textViewTax = findViewById(R.id.taxPrice);
+        textViewTotal = findViewById(R.id.total);
 
         // Retrieve the order details
         Order order = Order.getPizzaOrder();
@@ -64,6 +71,15 @@ public class CurrentOrder extends AppCompatActivity {
                 // Update the ListView with the filtered list
                 currentOrderAdapter.setPizzas(filteredPizzas);
                 currentOrderAdapter.notifyDataSetChanged();
+
+                // Recalculate and display total price, tax, and total based on filtered pizzas
+                double totalPrice = calculateTotalPrice(filteredPizzas);
+                double tax = calculateTax(filteredPizzas);
+                double total = totalPrice + tax;
+
+                textViewTotalPrice.setText("Total Price: $" + String.format("%.2f", totalPrice));
+                textViewTax.setText("Tax: $" + String.format("%.2f", tax));
+                textViewTotal.setText("Total: $" + String.format("%.2f", total));
             }
 
             @Override
@@ -119,6 +135,28 @@ public class CurrentOrder extends AppCompatActivity {
             orderIDAdapter.remove(orderID);
             orderIDAdapter.notifyDataSetChanged();
         }
+    }
+
+    // Method to calculate the total price based on a list of pizzas
+    private double calculateTotalPrice(List<Pizza> pizzas) {
+        double totalPrice = 0.0;
+        for (Pizza pizza : pizzas) {
+            if (pizza instanceof SpecialityPizza) {
+                totalPrice += ((SpecialityPizza) pizza).calculatePrice();
+            }
+        }
+        return totalPrice;
+    }
+
+    // Method to calculate the tax based on a list of pizzas
+    private double calculateTax(List<Pizza> pizzas) {
+        double tax = 0.0;
+        for (Pizza pizza : pizzas) {
+            if (pizza instanceof SpecialityPizza) {
+                tax += ((SpecialityPizza) pizza).calculateTax();
+            }
+        }
+        return tax;
     }
 
 }

@@ -40,6 +40,8 @@ public class Order {
         this.pizzaOrderIDs = new HashMap<>();
         this.storeID = nextStoreID++;
     }
+
+
     /**
      * Retrieves the singleton instance of the Order.
      *
@@ -96,28 +98,3 @@ public class Order {
 }
 
 
-
-
-//    protected void onCreate(Bundle savedInstanceState) {
-//
-//
-//        // Add an OnItemSelectedListener to the spinner
-//        spinnerOrderIDs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-//                // Get the selected Order ID
-//                int selectedOrderID = (int) spinnerOrderIDs.getSelectedItem();
-//
-//                // Filter the list based on the selected Order ID
-//                List<Pizza> filteredPizzas = order.getPizzasByOrderID(selectedOrderID);
-//
-//                // Update the adapter with the filtered list
-//                currentOrderAdapter.setOriginalPizzas(filteredPizzas);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parentView) {
-//                // Do nothing if nothing is selected
-//            }
-//        });
-//    }
