@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -17,19 +18,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 public class CurrentOrder extends AppCompatActivity {
     private ListView listView;
     private Spinner spinnerOrderIDs; // Add spinner for Order IDs
     private CurrentOrderAdapter currentOrderAdapter;
+    private Button btnRemoveOrder; // Add Button for removing orders
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_order);
 
-        // Initialize ListView and Spinner
+        // Initialize ListView, Spinner, and Button
         listView = findViewById(R.id.listViewOrder);
         spinnerOrderIDs = findViewById(R.id.spinnerOrderIDs);
+        btnRemoveOrder = findViewById(R.id.btnRemoveOrder);
 
         // Retrieve the order details
         Order order = Order.getPizzaOrder();
@@ -67,6 +71,20 @@ public class CurrentOrder extends AppCompatActivity {
                 // Do nothing if nothing is selected
             }
         });
+
+        // Add a click listener to the Remove Order button
+        btnRemoveOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Remove the order based on the selected Order ID
+                int selectedOrderID = (int) spinnerOrderIDs.getSelectedItem();
+                removeOrderByOrderID(selectedOrderID);
+
+                // Refresh the ListView after removing the order
+                currentOrderAdapter.setPizzas(Order.getPizzas());
+                currentOrderAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     // Add a method to filter pizzas by Order ID
@@ -85,6 +103,25 @@ public class CurrentOrder extends AppCompatActivity {
         return filteredPizzas;
     }
 
+    // Add a method to remove an order by Order ID
+    private void removeOrderByOrderID(int orderID) {
+        List<Pizza> pizzasToRemove = new ArrayList<>();
+        for (Pizza pizza : Order.getPizzas()) {
+            if (pizza instanceof SpecialityPizza && ((SpecialityPizza) pizza).getPizzaID() == orderID) {
+                pizzasToRemove.add(pizza);
+            }
+        }
+        Order.getPizzas().removeAll(pizzasToRemove);
+
+        // Remove the Order ID from the Spinner adapter
+        ArrayAdapter<Integer> orderIDAdapter = (ArrayAdapter<Integer>) spinnerOrderIDs.getAdapter();
+        if (orderIDAdapter != null) {
+            orderIDAdapter.remove(orderID);
+            orderIDAdapter.notifyDataSetChanged();
+        }
+    }
+
 }
+
 
 

@@ -11,13 +11,12 @@
     tools:context=".CurrentOrder">
 
 
-
     <Spinner
         android:id="@+id/spinnerOrderIDs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="69dp" />
+        android:layout_marginTop="47dp" />
 
     <ListView
         android:id="@+id/listViewOrder"
@@ -27,4 +26,15 @@
         android:layout_marginTop="15dp"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="0.5dp"></ListView>
+
+    <Button
+        android:id="@+id/btnRemoveOrder"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerOrderIDs"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="529dp"
+        android:layout_marginEnd="242dp"
+        android:onClick="removeOrder"
+        android:text="Remove Order" />
 </RelativeLayout>
