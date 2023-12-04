@@ -16,14 +16,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="31dp" />
+        android:layout_marginTop="22dp" />
 
     <ListView
         android:id="@+id/listViewOrder"
         android:layout_width="wrap_content"
         android:layout_height="483dp"
         android:layout_below="@id/spinnerOrderIDs"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="3dp"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="0.5dp"></ListView>
 
@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/spinnerOrderIDs"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="529dp"
-        android:layout_marginEnd="242dp"
+        android:layout_marginTop="495dp"
+        android:layout_marginEnd="79dp"
         android:onClick="removeOrder"
         android:text="Remove Order" />
 
@@ -43,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnRemoveOrder"
+        android:layout_marginTop="-44dp"
         android:text="TextView" />
 
     <TextView
@@ -58,4 +59,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/taxPrice"
         android:text="TextView" />
+
+    <Button
+        android:id="@+id/btnPlaceOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/total"
+        android:layout_marginTop="28dp"
+        android:text="Place Order" />
+
 </RelativeLayout>

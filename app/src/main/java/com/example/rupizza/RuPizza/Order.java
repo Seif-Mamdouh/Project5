@@ -35,7 +35,7 @@ public class Order {
      * Private constructor to enforce singleton pattern.
      * Initializes the order with an empty list of pizzas.
      */
-    private Order() {
+    public Order() {
         this.pizzas = new ArrayList<>();
         this.pizzaOrderIDs = new HashMap<>();
         this.storeID = nextStoreID++;
