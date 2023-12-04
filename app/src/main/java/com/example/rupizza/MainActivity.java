@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Add your intent code here
-                Intent intent = new Intent(MainActivity.this, StoreOrders.class);
+                Intent intent = new Intent(MainActivity.this, StoresOrders.class);
                 startActivity(intent);
             }
         });

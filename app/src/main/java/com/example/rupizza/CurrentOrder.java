@@ -37,13 +37,13 @@ public class CurrentOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_order);
 
-        // Initialize ListView, Spinner, and Button
         listView = findViewById(R.id.listViewOrder);
         spinnerOrderIDs = findViewById(R.id.spinnerOrderIDs);
         btnRemoveOrder = findViewById(R.id.btnRemoveOrder);
         textViewTotalPrice = findViewById(R.id.totalPrice);
         textViewTax = findViewById(R.id.taxPrice);
         textViewTotal = findViewById(R.id.total);
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
 
         // Retrieve the order details
         Order order = Order.getPizzaOrder();
@@ -106,22 +106,15 @@ public class CurrentOrder extends AppCompatActivity {
         });
 
 
-        btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Log the start of the onClick method
-                Log.d("CurrentOrder", "Place Order button clicked");
 
-                // Place the current order in the store order list
                 placeOrderInStore();
 
-                // Log the current order after placing it in the store
                 Log.d("CurrentOrder", "Current Order after placing in store: " + Order.getPizzaOrder().getPizzas());
 
-                // Clear the current order
                 clearCurrentOrder();
 
-                // Log the current order after clearing
                 Log.d("CurrentOrder", "Current Order after clearing: " + Order.getPizzaOrder().getPizzas());
 
                 // Notify the adapter that the data has changed
@@ -134,11 +127,11 @@ public class CurrentOrder extends AppCompatActivity {
     }
 
 
-    // Method to place the current order in the store order list
     private void placeOrderInStore() {
         Order currentOrder = Order.getPizzaOrder();
-        StoreOrders storeOrders = StoreOrders.getInstance();
-        storeOrders.add(currentOrder);
+
+        // Add the current order to the store orders
+        StoreOrders.getInstance().add(currentOrder);
     }
 
     // Method to clear the current order

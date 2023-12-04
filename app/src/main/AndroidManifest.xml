@@ -13,7 +13,7 @@
         android:theme="@style/Theme.RuPizza"
         tools:targetApi="31">
         <activity
-            android:name=".StoreOrders"
+            android:name=".StoresOrders"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CurrentOrder"

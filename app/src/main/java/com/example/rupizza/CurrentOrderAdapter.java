@@ -41,11 +41,6 @@ public class CurrentOrderAdapter extends BaseAdapter {
         return position;
     }
 
-    public void setOriginalPizzas(List<Pizza> pizzas) {
-        this.originalPizzas = pizzas;
-        notifyDataSetChanged();  // Notify the adapter that the data set has changed
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView textView = new TextView(parent.getContext());
