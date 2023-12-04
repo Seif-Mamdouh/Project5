@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.rupizza.RuPizza.Order;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
+import com.example.rupizza.RuPizza.StoreOrders;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class CurrentOrder extends AppCompatActivity {
     private TextView textViewTotalPrice;
     private TextView textViewTax;
     private TextView textViewTotal;
+    private Button btnPlaceOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,59 @@ public class CurrentOrder extends AppCompatActivity {
                 currentOrderAdapter.notifyDataSetChanged();
             }
         });
+
+
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
+        btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Log the start of the onClick method
+                Log.d("CurrentOrder", "Place Order button clicked");
+
+                // Place the current order in the store order list
+                placeOrderInStore();
+
+                // Log the current order after placing it in the store
+                Log.d("CurrentOrder", "Current Order after placing in store: " + Order.getPizzaOrder().getPizzas());
+
+                // Clear the current order
+                clearCurrentOrder();
+
+                // Log the current order after clearing
+                Log.d("CurrentOrder", "Current Order after clearing: " + Order.getPizzaOrder().getPizzas());
+
+                // Notify the adapter that the data has changed
+                currentOrderAdapter.notifyDataSetChanged();
+
+                // Log the end of the onClick method
+                Log.d("CurrentOrder", "Place Order button click finished");
+            }
+        });
+    }
+
+
+    // Method to place the current order in the store order list
+    private void placeOrderInStore() {
+        Order currentOrder = Order.getPizzaOrder();
+        StoreOrders storeOrders = StoreOrders.getInstance();
+        storeOrders.add(currentOrder);
+    }
+
+    // Method to clear the current order
+    private void clearCurrentOrder() {
+        // Clear the current order
+        Order.getPizzaOrder().resetOrder();
+
+        // Clear the ListView
+        currentOrderAdapter.setPizzas(new ArrayList<>());
+        currentOrderAdapter.notifyDataSetChanged();
+
+        // Clear the Spinner selection
+        spinnerOrderIDs.setSelection(0); // Assuming the first item is "All Orders"
+
+        // Clear the TextViews for total price, tax, and total
+        textViewTotalPrice.setText("Total Price: $0.00");
+        textViewTax.setText("Tax: $0.00");
+        textViewTotal.setText("Total: $0.00");
     }
 
     // Add a method to filter pizzas by Order ID
