@@ -113,7 +113,7 @@ public class CurrentOrder extends AppCompatActivity {
                 } else {
                     placeOrderInStore();
 //                    // Clear the current order
-//                    clearCurrentOrder();
+                    clearCurrentOrder();
                     // Notify the adapter that the data has changed
                     currentOrderAdapter.notifyDataSetChanged();
 
