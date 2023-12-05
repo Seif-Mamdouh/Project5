@@ -1,5 +1,4 @@
 package com.example.rupizza;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,18 +7,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.rupizza.RuPizza.Order;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
 import com.example.rupizza.RuPizza.StoreOrders;
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class CurrentOrder extends AppCompatActivity {
@@ -31,6 +27,9 @@ public class CurrentOrder extends AppCompatActivity {
     private TextView textViewTax;
     private TextView textViewTotal;
     private Button btnPlaceOrder;
+
+
+    private StoreOrdersAdapter storeOrdersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,25 +107,36 @@ public class CurrentOrder extends AppCompatActivity {
 
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Check if the order list is empty
+                if (Order.getPizzaOrder().getPizzas().isEmpty()) {
+                    showErrorDialog("Cannot place an empty order.");
+                } else {
+                    placeOrderInStore();
+//                    // Clear the current order
+//                    clearCurrentOrder();
+                    // Notify the adapter that the data has changed
+                    currentOrderAdapter.notifyDataSetChanged();
 
-                placeOrderInStore();
-
-                Log.d("CurrentOrder", "Current Order after placing in store: " + Order.getPizzaOrder().getPizzas());
-
-                clearCurrentOrder();
-
-                Log.d("CurrentOrder", "Current Order after clearing: " + Order.getPizzaOrder().getPizzas());
-
-                // Notify the adapter that the data has changed
-                currentOrderAdapter.notifyDataSetChanged();
-
-                // Log the end of the onClick method
-                Log.d("CurrentOrder", "Place Order button click finished");
+                    // Log the end of the onClick method
+                    Log.d("CurrentOrder", "Place Order button click finished");
+                    showSuccessDialog("Order Placed in Store Order!");
+                }
             }
         });
+
     }
 
-
+//    // Modify the placeOrderInStore method to accept the order to place
+//    private void placeOrderInStore(Order order) {
+//        // Add the current order to the store orders
+//        StoreOrders.getInstance().add(order);
+//        // After adding the order in placeOrderInStore method
+//        Log.d("StoreOrders", "Store Orders after placing order: " + StoreOrders.getInstance().getOrders());
+//
+//    }
+//    // Create a copy of the current order
+//    Order currentOrderCopy = new Order();
+//                    currentOrderCopy.getPizzas().addAll(Order.getPizzaOrder().getPizzas());
     private void placeOrderInStore() {
         Order currentOrder = Order.getPizzaOrder();
 
@@ -134,11 +144,9 @@ public class CurrentOrder extends AppCompatActivity {
         StoreOrders.getInstance().add(currentOrder);
     }
 
+
     // Method to clear the current order
     private void clearCurrentOrder() {
-        // Clear the current order
-        Order.getPizzaOrder().resetOrder();
-
         // Clear the ListView
         currentOrderAdapter.setPizzas(new ArrayList<>());
         currentOrderAdapter.notifyDataSetChanged();
@@ -150,7 +158,12 @@ public class CurrentOrder extends AppCompatActivity {
         textViewTotalPrice.setText("Total Price: $0.00");
         textViewTax.setText("Tax: $0.00");
         textViewTotal.setText("Total: $0.00");
+
+        // Clear the current order after updating the UI
+        Order.getPizzaOrder().resetOrder();
     }
+
+
 
     // Add a method to filter pizzas by Order ID
     private List<Pizza> filterPizzasByOrderID(int orderID) {
@@ -167,8 +180,6 @@ public class CurrentOrder extends AppCompatActivity {
         }
         return filteredPizzas;
     }
-
-    // Add a method to remove an order by Order ID
     private void removeOrderByOrderID(int orderID) {
         List<Pizza> pizzasToRemove = new ArrayList<>();
         for (Pizza pizza : Order.getPizzas()) {
@@ -176,15 +187,49 @@ public class CurrentOrder extends AppCompatActivity {
                 pizzasToRemove.add(pizza);
             }
         }
-        Order.getPizzas().removeAll(pizzasToRemove);
 
-        // Remove the Order ID from the Spinner adapter
-        ArrayAdapter<Integer> orderIDAdapter = (ArrayAdapter<Integer>) spinnerOrderIDs.getAdapter();
-        if (orderIDAdapter != null) {
-            orderIDAdapter.remove(orderID);
-            orderIDAdapter.notifyDataSetChanged();
+        if (!pizzasToRemove.isEmpty()) {
+            Order.getPizzas().removeAll(pizzasToRemove);
+
+            // Remove the Order ID from the Spinner adapter
+            ArrayAdapter<Integer> orderIDAdapter = (ArrayAdapter<Integer>) spinnerOrderIDs.getAdapter();
+            if (orderIDAdapter != null) {
+                orderIDAdapter.remove(orderID);
+                orderIDAdapter.notifyDataSetChanged();
+
+                showSuccessDialog("Order removed successfully!");
+            }
+        } else {
+            // If the list is empty, show an error dialog
+            showErrorDialog("No order found for the selected Order ID.");
         }
     }
+
+    // Method to show a success dialog
+    private void showSuccessDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Success")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // You can add any additional action on OK button click
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    // Method to show an error dialog
+    private void showErrorDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // You can add any additional action on OK button click
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+
 
     // Method to calculate the total price based on a list of pizzas
     private double calculateTotalPrice(List<Pizza> pizzas) {
