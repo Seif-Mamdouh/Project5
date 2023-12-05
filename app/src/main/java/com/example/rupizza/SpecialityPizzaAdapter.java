@@ -21,15 +21,45 @@ import java.util.concurrent.atomic.AtomicReference;
 import androidx.appcompat.app.AlertDialog;
 
 
+
+
+/**
+ * {RecyclerView.Adapter} implementation for managing the display of speciality pizzas in a {RecyclerView}.
+ * This adapter is designed to work with the {SpecialityPizzaViewHolder} class for item views.
+ *
+ * @author Seifeldeen Mohamed
+ */
 public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizzaViewHolder> {
+
+    /**
+     * The list of speciality pizza types to be displayed.
+     */
     private List<Pizza.PizzaType> pizzaList;
+
+    /**
+     * The context associated with the adapter.
+     */
     private Context context;
 
+
+    /**
+     * Constructs a new instance of {@code SpecialityPizzaAdapter}.
+     *
+     * @param pizzaList The list of speciality pizza types to be displayed.
+     * @param context   The context associated with the adapter.
+     */
     public SpecialityPizzaAdapter(List<Pizza.PizzaType> pizzaList, Context context) {
         this.pizzaList = pizzaList;
         this.context = context;
     }
 
+    /**
+     * Called when RecyclerView needs a new {SpecialityPizzaViewHolder} of the given type to represent an item.
+     *
+     * @param parent   The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType The view type of the new View.
+     * @return A new {SpecialityPizzaViewHolder} that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public SpecialityPizzaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,15 +67,19 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         return new SpecialityPizzaViewHolder(view);
     }
 
-
+    /**
+     * Called by RecyclerView to display the data at the specified position.
+     *
+     * @param holder   The {SpecialityPizzaViewHolder} that should be updated to represent the contents of the item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull SpecialityPizzaViewHolder holder, int position) {
         Pizza.PizzaType pizzaType = pizzaList.get(position);
 
-        // Load pizza image using Glide or any other image loading library
         Glide.with(context)
                 .load(getPizzaImageResource(pizzaType))
-                .placeholder(R.drawable.pizza) // Use a default image or placeholder
+                .placeholder(R.drawable.pizza)
                 .into(holder.imagePizza);
 
         holder.textPizzaDetails.setText(pizzaType.toString());
@@ -57,7 +91,7 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
             holder.textToppings.setText("No toppings");
         }
 
-        // Populate the spinner with available sizes
+
         ArrayAdapter<Size> sizeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, Size.values());
         sizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinnerSize.setAdapter(sizeAdapter);
@@ -116,7 +150,6 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
             }
         });
 
-
         holder.btnAddToCart.setOnClickListener(view -> {
             // Get the selected pizza details
             Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
@@ -139,13 +172,19 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     }
 
 
-
+    /**
+     * Gets the number of items in the data set represented by this adapter.
+     *
+     * @return The total number of items in the data set held by the adapter.
+     */
     @Override
     public int getItemCount() {
         return pizzaList.size();
     }
 
-
+    /**
+     * Shows a success dialog when a pizza is successfully added to the order.
+     */
     private void showSuccessDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Success")
@@ -157,7 +196,11 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
                 .show();
     }
 
-    // Helper method to update the base price
+    /**
+     * Helper method to update the base price based on the selected size, quantity, and checkbox states.
+     *
+     * @param holder The {SpecialityPizzaViewHolder} containing the UI elements.
+     */
     private void updateBasePrice(SpecialityPizzaViewHolder holder) {
         // Retrieve the selected size from the spinner
         Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
@@ -176,6 +219,16 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         holder.textBasePrice.setText("Total Price: $" + String.format("%.2f", total));
     }
 
+    /**
+     * Calculates the total price of a pizza based on its type, size, quantity, and optional toppings.
+     *
+     * @param pizzaType   The type of the pizza.
+     * @param size        The size of the pizza.
+     * @param quantity    The quantity of the pizza.
+     * @param extraCheese  Whether extra cheese is selected.
+     * @param extraSauce   Whether extra sauce is selected.
+     * @return The total price of the pizza.
+     */
     private double calculateTotal(Pizza.PizzaType pizzaType, Size size, int quantity, boolean extraCheese, boolean extraSauce) {
         // Calculate the base price based on pizza type, size, and optional toppings
         double basePrice = calculateBasePrice(pizzaType, size, extraCheese, extraSauce);
@@ -183,6 +236,16 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         // Calculate the total price based on quantity
         return basePrice * quantity;
     }
+
+    /**
+     * Calculates the base price of a pizza based on its type, size, and optional toppings.
+     *
+     * @param pizzaType   The type of the pizza.
+     * @param size        The size of the pizza.
+     * @param extraCheese  Whether extra cheese is selected.
+     * @param extraSauce   Whether extra sauce is selected.
+     * @return The base price of the pizza.
+     */
     private double calculateBasePrice(Pizza.PizzaType pizzaType, Size size, boolean extraCheese, boolean extraSauce) {
         Log.d("SpecialityPizzaAdapter", "Calculating Base Price for Pizza Type: " + pizzaType + ", Size: " + size);
 
@@ -237,7 +300,12 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         return basePrice;
     }
 
-
+    /**
+     * Gets the image resource ID for the specified pizza type.
+     *
+     * @param pizzaType The type of the pizza.
+     * @return The image resource ID for the specified pizza type.
+     */
     private int getPizzaImageResource(Pizza.PizzaType pizzaType) {
         if (pizzaType == null) {
             // Handle null case, return a default image or something
@@ -272,6 +340,12 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         }
     }
 
+
+    /**
+     * Gets a list of quantity options from 1 to 10.
+     *
+     * @return A list of quantity options.
+     */
     private List<Integer> getQuantityOptions() {
         List<Integer> options = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
