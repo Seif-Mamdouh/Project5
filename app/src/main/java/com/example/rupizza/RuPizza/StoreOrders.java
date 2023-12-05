@@ -50,10 +50,11 @@ public class StoreOrders {
         }
 
         Order O = (Order) obj;
-        displayOrderView.add(orderIDCounter);
-        mapping.put(orderIDCounter++, O);
+        mapping.put(orderIDCounter, O);
+        displayOrderView.add(orderIDCounter++);
         return true;
     }
+
 
     /**
      * Removes an order from the mapping based on its order ID.
@@ -148,4 +149,10 @@ public class StoreOrders {
         }
         return tot;
     }
+
+
+    public boolean contains(Order order) {
+        return mapping.containsValue(order);
+    }
+
 }

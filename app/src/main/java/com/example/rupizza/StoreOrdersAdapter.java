@@ -9,24 +9,37 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.rupizza.RuPizza.Order;
+import com.example.rupizza.RuPizza.Pizza;
+import com.example.rupizza.RuPizza.SpecialityPizza;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+
+// StoreOrdersAdapter.java
 public class StoreOrdersAdapter extends BaseAdapter {
-    private List<Order> storeOrders;
 
-    public StoreOrdersAdapter(List<Order> storeOrders) {
-        this.storeOrders = storeOrders;
+    private List<Integer> orderIDs;
+
+
+    private Map<Integer, Order> orderMapping;
+    private Context context;
+
+    public StoreOrdersAdapter(Context context, List<Integer> orderIDs, Map<Integer, Order> orderMapping) {
+        this.context = context;
+        this.orderIDs = orderIDs;
+        this.orderMapping = orderMapping;
     }
 
     @Override
     public int getCount() {
-        return storeOrders.size();
+        return orderIDs.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return storeOrders.get(position);
+        return orderMapping.get(orderIDs.get(position));
     }
 
     @Override
@@ -36,13 +49,40 @@ public class StoreOrdersAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_order, parent, false);
+        }
 
-    public void updateStoreOrders(List<Order> storeOrders) {
-        this.storeOrders = storeOrders;
-        notifyDataSetChanged();
-        Log.d("StoreOrdersAdapter", "Data updated. New size: " + storeOrders.size());
+        TextView textOrderDetails = convertView.findViewById(R.id.textOrderDetails);
+
+        Order order = (Order) getItem(position);
+
+        if (order != null) {
+            // Customize this part based on how you want to display the order details
+            String orderDetails = "Order ID: " + order.getOrderIDs() + "\n";
+
+            // Iterate over the pizzas in the order and append details
+            for (Pizza pizza : order.getPizzas()) {
+                if (pizza instanceof SpecialityPizza) {
+                    SpecialityPizza specialityPizza = (SpecialityPizza) pizza;
+                    orderDetails += "Order ID: " + specialityPizza.getPizzaID() + "\n" +  // Include Order ID here
+                            "Pizza Type: " + specialityPizza.getPizzaType() + "\n" +
+                            "Quantity: " + specialityPizza.getQuantity() + "\n" +
+                            "Size: " + specialityPizza.getSize() + "\n" +
+                            "Extra Cheese: " + (specialityPizza.isExtraCheese() ? "yes" : "no") + "\n" +
+                            "Extra Sauce: " + (specialityPizza.isExtraSauce() ? "yes" : "no") + "\n" +
+                            "Toppings: " + specialityPizza.getToppings() + "\n" +
+                            "Total Price: $" + specialityPizza.total() + "\n" +
+                            "Tax: $" + specialityPizza.calculateTax() + "\n" +
+                            "Total: $" + (specialityPizza.total() + specialityPizza.calculateTax()) + "\n\n";
+                }
+            }
+
+
+            textOrderDetails.setText(orderDetails);
+        }
+
+        return convertView;
     }
 }
 

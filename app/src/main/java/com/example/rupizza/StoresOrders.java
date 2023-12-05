@@ -17,6 +17,7 @@ import com.example.rupizza.RuPizza.StoreOrders;
 import com.example.rupizza.RuPizza.Order;
 
 public class StoresOrders extends AppCompatActivity {
+
     private ListView listViewStoreOrders;
     private StoreOrdersAdapter storeOrdersAdapter;
 
@@ -25,7 +26,13 @@ public class StoresOrders extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_orders);
 
-        // Initialize ListView
+        // Assuming you have a reference to your StoreOrders instance
+        StoreOrders storeOrders = StoreOrders.getInstance();
+
         listViewStoreOrders = findViewById(R.id.listViewStoreOrders);
+
+        // Create and set the adapter
+        storeOrdersAdapter = new StoreOrdersAdapter(this, storeOrders.getOrders(), storeOrders.getMapping());
+        listViewStoreOrders.setAdapter(storeOrdersAdapter);
     }
 }
