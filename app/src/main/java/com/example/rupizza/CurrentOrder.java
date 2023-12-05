@@ -111,16 +111,9 @@ public class CurrentOrder extends AppCompatActivity {
                 if (Order.getPizzaOrder().getPizzas().isEmpty()) {
                     showErrorDialog("Cannot place an empty order.");
                 } else {
-                    // Create a copy of the current order
-                    Order currentOrderCopy = new Order();
-                    currentOrderCopy.getPizzas().addAll(Order.getPizzaOrder().getPizzas());
-
-                    // Place the copy in StoreOrders
-                    placeOrderInStore(currentOrderCopy);
-
-                    // Clear the current order
-                    clearCurrentOrder();
-
+                    placeOrderInStore();
+//                    // Clear the current order
+//                    clearCurrentOrder();
                     // Notify the adapter that the data has changed
                     currentOrderAdapter.notifyDataSetChanged();
 
@@ -133,20 +126,23 @@ public class CurrentOrder extends AppCompatActivity {
 
     }
 
-    // Modify the placeOrderInStore method to accept the order to place
-    private void placeOrderInStore(Order order) {
-        // Add the current order to the store orders
-        StoreOrders.getInstance().add(order);
-        // After adding the order in placeOrderInStore method
-        Log.d("StoreOrders", "Store Orders after placing order: " + StoreOrders.getInstance().getOrders());
-
-    }
-//    private void placeOrderInStore() {
-//        Order currentOrder = Order.getPizzaOrder();
-//
+//    // Modify the placeOrderInStore method to accept the order to place
+//    private void placeOrderInStore(Order order) {
 //        // Add the current order to the store orders
-//        StoreOrders.getInstance().add(currentOrder);
+//        StoreOrders.getInstance().add(order);
+//        // After adding the order in placeOrderInStore method
+//        Log.d("StoreOrders", "Store Orders after placing order: " + StoreOrders.getInstance().getOrders());
+//
 //    }
+//    // Create a copy of the current order
+//    Order currentOrderCopy = new Order();
+//                    currentOrderCopy.getPizzas().addAll(Order.getPizzaOrder().getPizzas());
+    private void placeOrderInStore() {
+        Order currentOrder = Order.getPizzaOrder();
+
+        // Add the current order to the store orders
+        StoreOrders.getInstance().add(currentOrder);
+    }
 
 
     // Method to clear the current order
