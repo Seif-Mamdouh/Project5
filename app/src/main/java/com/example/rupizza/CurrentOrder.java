@@ -1,5 +1,6 @@
 package com.example.rupizza;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rupizza.RuPizza.Order;
@@ -108,20 +110,24 @@ public class CurrentOrder extends AppCompatActivity {
 
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Check if the order list is empty
+                if (Order.getPizzaOrder().getPizzas().isEmpty()) {
+                    showErrorDialog("Cannot place an empty order.");
+                } else {
+                    placeOrderInStore();
 
-                placeOrderInStore();
+                    Log.d("CurrentOrder", "Current Order after placing in store: " + Order.getPizzaOrder().getPizzas());
 
-                Log.d("CurrentOrder", "Current Order after placing in store: " + Order.getPizzaOrder().getPizzas());
+                    clearCurrentOrder();
 
-                clearCurrentOrder();
+                    Log.d("CurrentOrder", "Current Order after clearing: " + Order.getPizzaOrder().getPizzas());
 
-                Log.d("CurrentOrder", "Current Order after clearing: " + Order.getPizzaOrder().getPizzas());
+                    // Notify the adapter that the data has changed
+                    currentOrderAdapter.notifyDataSetChanged();
 
-                // Notify the adapter that the data has changed
-                currentOrderAdapter.notifyDataSetChanged();
-
-                // Log the end of the onClick method
-                Log.d("CurrentOrder", "Place Order button click finished");
+                    // Log the end of the onClick method
+                    Log.d("CurrentOrder", "Place Order button click finished");
+                }
             }
         });
     }
@@ -167,8 +173,6 @@ public class CurrentOrder extends AppCompatActivity {
         }
         return filteredPizzas;
     }
-
-    // Add a method to remove an order by Order ID
     private void removeOrderByOrderID(int orderID) {
         List<Pizza> pizzasToRemove = new ArrayList<>();
         for (Pizza pizza : Order.getPizzas()) {
@@ -176,15 +180,49 @@ public class CurrentOrder extends AppCompatActivity {
                 pizzasToRemove.add(pizza);
             }
         }
-        Order.getPizzas().removeAll(pizzasToRemove);
 
-        // Remove the Order ID from the Spinner adapter
-        ArrayAdapter<Integer> orderIDAdapter = (ArrayAdapter<Integer>) spinnerOrderIDs.getAdapter();
-        if (orderIDAdapter != null) {
-            orderIDAdapter.remove(orderID);
-            orderIDAdapter.notifyDataSetChanged();
+        if (!pizzasToRemove.isEmpty()) {
+            Order.getPizzas().removeAll(pizzasToRemove);
+
+            // Remove the Order ID from the Spinner adapter
+            ArrayAdapter<Integer> orderIDAdapter = (ArrayAdapter<Integer>) spinnerOrderIDs.getAdapter();
+            if (orderIDAdapter != null) {
+                orderIDAdapter.remove(orderID);
+                orderIDAdapter.notifyDataSetChanged();
+
+                showSuccessDialog("Order removed successfully!");
+            }
+        } else {
+            // If the list is empty, show an error dialog
+            showErrorDialog("No order found for the selected Order ID.");
         }
     }
+
+    // Method to show a success dialog
+    private void showSuccessDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Success")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // You can add any additional action on OK button click
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    // Method to show an error dialog
+    private void showErrorDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // You can add any additional action on OK button click
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+
 
     // Method to calculate the total price based on a list of pizzas
     private double calculateTotalPrice(List<Pizza> pizzas) {
