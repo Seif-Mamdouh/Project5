@@ -3,29 +3,28 @@ package com.example.rupizza;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-
 import com.example.rupizza.RuPizza.Pizza;
-import com.example.rupizza.RuPizza.PizzaMaker;
-import com.example.rupizza.RuPizza.Size;
-import com.example.rupizza.RuPizza.SpecialityPizza;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import android.os.Bundle;
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
 
+
+/**
+ * Activity class representing a screen displaying a list of specialty pizzas.
+ * Allows users to view and customize pizzas for ordering.
+ *
+ *  @author Seifeldeen Mohamed
+ */
 public class Speciality_Pizza extends AppCompatActivity {
 
+    /**
+     * Called when the activity is first created. Responsible for initializing the activity,
+     * creating the pizza list, setting up the RecyclerView, and configuring the adapter.
+     *
+     * @param savedInstanceState A Bundle containing the activity's previously saved state, if any.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +43,11 @@ public class Speciality_Pizza extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-
+    /**
+     * Creates a list of specialty pizza types for display.
+     *
+     * @return A list of PizzaType representing different specialty pizzas.
+     */
     private List<Pizza.PizzaType> createPizzaList (){
         List <Pizza.PizzaType> list = new ArrayList<>();
 
