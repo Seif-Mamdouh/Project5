@@ -75,19 +75,12 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         // Handle spinner item selection
         holder.spinnerSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             private boolean userInteraction = true; // Flag to track user interaction
-
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selectedPosition, long id) {
                 // Check if the change is due to user interaction
                 if (userInteraction) {
-                    // Do something when a size is selected
-                    Size selectedSize = Size.values()[selectedPosition];
-                    // Recalculate and update the base price
-                    double basePrice = calculateBasePrice(pizzaType, selectedSize, holder.checkBoxExtraCheese.isChecked(), holder.checkBoxExtraSauce.isChecked());
-                    holder.textBasePrice.setText("Base Price: $" + String.format("%.2f", basePrice));
+                    updateBasePrice(holder);
                 }
-
-                // Reset the flag
                 userInteraction = true;
             }
 
@@ -99,23 +92,12 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
         // Handle checkbox states
         holder.checkBoxExtraSauce.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Handle extra sauce checkbox state change
-            Log.d("SpecialityPizzaAdapter", "Extra Sauce: " + isChecked);
-
-            // Recalculate and update the base price
-            Size pizzaSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
-            double basePrice = calculateBasePrice(pizzaType, pizzaSize, holder.checkBoxExtraCheese.isChecked(), isChecked);
-            holder.textBasePrice.setText("Base Price: $" + String.format("%.2f", basePrice));
+            updateBasePrice(holder);
         });
 
         holder.checkBoxExtraCheese.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Handle extra cheese checkbox state change
-            Log.d("SpecialityPizzaAdapter", "Extra Cheese: " + isChecked);
+            updateBasePrice(holder);
 
-            // Recalculate and update the base price
-            Size pizzaSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
-            double basePrice = calculateBasePrice(pizzaType, pizzaSize, isChecked, holder.checkBoxExtraSauce.isChecked());
-            holder.textBasePrice.setText("Base Price: $" + String.format("%.2f", basePrice));
         });
 
 
@@ -133,14 +115,7 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         holder.spinnerQuantity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int selectedPosition, long id) {
-                // Retrieve the selected size from the spinner
-                Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
-
-                int selectedQuantity = (int) holder.spinnerQuantity.getSelectedItem();
-
-                // Recalculate and update the total price
-                double total = calculateTotal(pizzaType, selectedSize, selectedQuantity, holder.checkBoxExtraCheese.isChecked(), holder.checkBoxExtraSauce.isChecked());
-                holder.textBasePrice.setText("Total Price: $" + String.format("%.2f", total));
+                updateBasePrice(holder);
             }
 
             @Override
@@ -177,6 +152,29 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     public int getItemCount() {
         return pizzaList.size();
     }
+
+
+
+    // Helper method to update the base price
+    private void updateBasePrice(SpecialityPizzaViewHolder holder) {
+        // Retrieve the selected size from the spinner
+        Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
+
+        // Retrieve the selected quantity from the spinner
+        int selectedQuantity = (int) holder.spinnerQuantity.getSelectedItem();
+
+        // Recalculate and update the total price
+        double total = calculateTotal(
+                pizzaList.get(holder.getAdapterPosition()),
+                selectedSize,
+                selectedQuantity,
+                holder.checkBoxExtraCheese.isChecked(),
+                holder.checkBoxExtraSauce.isChecked()
+        );
+        holder.textBasePrice.setText("Total Price: $" + String.format("%.2f", total));
+    }
+
+
 
     private double calculateTotal(Pizza.PizzaType pizzaType, Size size, int quantity, boolean extraCheese, boolean extraSauce) {
         // Calculate the base price based on pizza type, size, and optional toppings
