@@ -1,31 +1,25 @@
 package com.example.rupizza;
 
 import static com.example.rupizza.RuPizza.Pizza.getDefaultToppings;
-
 import android.content.Context;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.rupizza.RuPizza.Order;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.Size;
 import com.bumptech.glide.Glide;
-import com.example.rupizza.RuPizza.SpecialityPizza;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import androidx.appcompat.app.AlertDialog;
+
 
 public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizzaViewHolder> {
     private List<Pizza.PizzaType> pizzaList;
@@ -100,8 +94,6 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
         });
 
-
-
         // Populate the quantity spinner
         ArrayAdapter<Integer> quantityAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, getQuantityOptions());
         quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -130,16 +122,16 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
             Size selectedSize = Size.values()[holder.spinnerSize.getSelectedItemPosition()];
             boolean extraCheese = holder.checkBoxExtraCheese.isChecked();
             boolean extraSauce = holder.checkBoxExtraSauce.isChecked();
-            toppings.set(getDefaultToppings(pizzaType)); // Implement this method as needed
-            int quantity = (int) holder.spinnerQuantity.getSelectedItem(); // Assuming spinner is populated with Integer values
+            toppings.set(getDefaultToppings(pizzaType));
+            int quantity = (int) holder.spinnerQuantity.getSelectedItem();
 
-            // Create a SpecialityPizza instance
             Pizza selectedPizza = Pizza.createPizza(pizzaType, selectedSize, extraSauce, extraCheese, toppings.get(), quantity);
 
             boolean addedToOrder = Order.getPizzaOrder().addPizza(selectedPizza);
 
             if (addedToOrder) {
                 Log.d("SpecialityPizzaAdapter", "Added Pizza to Order: " + selectedPizza);
+                showSuccessDialog();
             } else {
                 Log.e("SpecialityPizzaAdapter", "Failed to add Pizza to Order");
             }
@@ -154,6 +146,16 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     }
 
 
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Success")
+                .setMessage("Pizza added to the order successfully!")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Handle OK button click if needed
+                    dialog.dismiss();
+                })
+                .show();
+    }
 
     // Helper method to update the base price
     private void updateBasePrice(SpecialityPizzaViewHolder holder) {
@@ -173,8 +175,6 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         );
         holder.textBasePrice.setText("Total Price: $" + String.format("%.2f", total));
     }
-
-
 
     private double calculateTotal(Pizza.PizzaType pizzaType, Size size, int quantity, boolean extraCheese, boolean extraSauce) {
         // Calculate the base price based on pizza type, size, and optional toppings
