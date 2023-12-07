@@ -14,7 +14,10 @@ import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
 import com.example.rupizza.RuPizza.StoreOrders;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -90,6 +93,18 @@ public class CurrentOrder extends AppCompatActivity {
             }
         });
 
+        // Add an OnItemClickListener to the ListView to display order details on item click
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected pizza
+                Pizza selectedPizza = (Pizza) currentOrderAdapter.getItem(position);
+
+                // Display order details in a Toast
+                displayOrderDetails(selectedPizza);
+            }
+        });
+
         // Add a click listener to the Remove Order button
         btnRemoveOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +176,20 @@ public class CurrentOrder extends AppCompatActivity {
 
         // Clear the current order after updating the UI
         Order.getPizzaOrder().resetOrder();
+    }
+
+
+    // Method to display order details in a Toast
+    private void displayOrderDetails(Pizza pizza) {
+        String orderDetails = "";
+
+        if (pizza instanceof SpecialityPizza) {
+            SpecialityPizza specialityPizza = (SpecialityPizza) pizza;
+            orderDetails +=
+                    "Pizza Type: " + specialityPizza.getPizzaType();
+        }
+
+        Toast.makeText(this, orderDetails, Toast.LENGTH_LONG).show();
     }
 
 
