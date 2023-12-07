@@ -111,13 +111,19 @@ public class CurrentOrder extends AppCompatActivity {
             public void onClick(View v) {
                 // Remove the order based on the selected Order ID
                 int selectedOrderID = (int) spinnerOrderIDs.getSelectedItem();
+
+                // Create an instance of the Order class
+                Order currentOrder = Order.getPizzaOrder();
+
+                // Remove the order by ID
                 removeOrderByOrderID(selectedOrderID);
 
                 // Refresh the ListView after removing the order
-                currentOrderAdapter.setPizzas(Order.getPizzas());
+                currentOrderAdapter.setPizzas(currentOrder.getPizzas());
                 currentOrderAdapter.notifyDataSetChanged();
             }
         });
+
 
 
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +134,8 @@ public class CurrentOrder extends AppCompatActivity {
                 } else {
                     placeOrderInStore();
 //                    // Clear the current order
-//                    clearCurrentOrder();
+                    clearCurrentOrder();
+
                     // Notify the adapter that the data has changed
                     currentOrderAdapter.notifyDataSetChanged();
 
@@ -194,31 +201,37 @@ public class CurrentOrder extends AppCompatActivity {
 
 
 
-    // Add a method to filter pizzas by Order ID
     private List<Pizza> filterPizzasByOrderID(int orderID) {
+        // Create an instance of the Order class
+        Order currentOrder = Order.getPizzaOrder();
+
         if (orderID == -1) {
             // Return all pizzas when "All Orders" is selected
-            return Order.getPizzas();
+            return currentOrder.getPizzas();
         }
 
         List<Pizza> filteredPizzas = new ArrayList<>();
-        for (Pizza pizza : Order.getPizzas()) {
+        for (Pizza pizza : currentOrder.getPizzas()) {
             if (pizza instanceof SpecialityPizza && ((SpecialityPizza) pizza).getPizzaID() == orderID) {
                 filteredPizzas.add(pizza);
             }
         }
         return filteredPizzas;
     }
+
     private void removeOrderByOrderID(int orderID) {
+        // Create an instance of the Order class
+        Order currentOrder = Order.getPizzaOrder();
+
         List<Pizza> pizzasToRemove = new ArrayList<>();
-        for (Pizza pizza : Order.getPizzas()) {
+        for (Pizza pizza : currentOrder.getPizzas()) {
             if (pizza instanceof SpecialityPizza && ((SpecialityPizza) pizza).getPizzaID() == orderID) {
                 pizzasToRemove.add(pizza);
             }
         }
 
         if (!pizzasToRemove.isEmpty()) {
-            Order.getPizzas().removeAll(pizzasToRemove);
+            currentOrder.getPizzas().removeAll(pizzasToRemove);
 
             // Remove the Order ID from the Spinner adapter
             ArrayAdapter<Integer> orderIDAdapter = (ArrayAdapter<Integer>) spinnerOrderIDs.getAdapter();

@@ -38,22 +38,67 @@ public class StoreOrders {
         return mapping;
     }
 
-    /**
-     * Adds an order to the mapping.
-     *
-     * @param obj The object to be added as an order. Must be an instance of the Order class.
-     * @return {@code true} if the object was successfully added as an order, {@code false} otherwise.
-     */
-    public boolean add(Object obj) {
-        if (!(obj instanceof Order)) {
+//    /**
+//     * Adds an order to the mapping.
+//     *
+//     * @param obj The object to be added as an order. Must be an instance of the Order class.
+//     * @return {@code true} if the object was successfully added as an order, {@code false} otherwise.
+//     */
+//    public boolean add(Object obj) {
+//        if (!(obj instanceof Order)) {
+//            return false;
+//        }
+//
+//        Order O = (Order) obj;
+//        mapping.put(orderIDCounter, O);
+//        displayOrderView.add(orderIDCounter++);
+//        return true;
+//    }
+
+
+    public boolean add(Order originalOrder) {
+        if (originalOrder == null) {
             return false;
         }
 
-        Order O = (Order) obj;
-        mapping.put(orderIDCounter, O);
+        // Create a new instance of Order using a factory method
+        Order clonedOrder = createOrderCopy(originalOrder);
+
+        mapping.put(orderIDCounter, clonedOrder);
         displayOrderView.add(orderIDCounter++);
         return true;
     }
+
+    private Order createOrderCopy(Order originalOrder) {
+        Order clonedOrder = new Order();
+
+        // Copy the pizzas from the original order to the cloned order
+        for (Pizza pizza : originalOrder.getPizzas()) {
+            Pizza copiedPizza = null;
+
+            // Check the concrete type of Pizza and create a copy accordingly
+            if (pizza instanceof SpecialityPizza) {
+                SpecialityPizza specialityPizza = (SpecialityPizza) pizza;
+                copiedPizza = new SpecialityPizza(
+                        specialityPizza.getPizzaType(),
+                        specialityPizza.getSize(),
+                        specialityPizza.isExtraSauce(),
+                        specialityPizza.isExtraCheese(),
+                        new ArrayList<>(specialityPizza.getToppings()), // Create a new list to avoid modifying the original toppings list
+                        specialityPizza.getQuantity()
+                );
+            }
+
+            if (copiedPizza != null) {
+                clonedOrder.addPizza(copiedPizza);
+            }
+        }
+
+        return clonedOrder;
+    }
+
+
+
 
 
     /**

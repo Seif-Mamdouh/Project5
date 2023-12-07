@@ -21,8 +21,6 @@ import java.util.Map;
 public class StoreOrdersAdapter extends BaseAdapter {
 
     private List<Integer> orderIDs;
-
-
     private Map<Integer, Order> orderMapping;
     private Context context;
 
@@ -58,7 +56,6 @@ public class StoreOrdersAdapter extends BaseAdapter {
         Order order = (Order) getItem(position);
 
         if (order != null) {
-            // Customize this part based on how you want to display the order details
             String orderDetails = "Order ID: " + order.getOrderIDs() + "\n";
 
             // Iterate over the pizzas in the order and append details
