@@ -21,8 +21,6 @@ import java.util.Map;
 public class StoreOrdersAdapter extends BaseAdapter {
 
     private List<Integer> orderIDs;
-
-
     private Map<Integer, Order> orderMapping;
     private Context context;
 

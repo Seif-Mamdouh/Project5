@@ -21,13 +21,10 @@ import java.util.stream.Collectors;
 
 public class Order {
     private static Order pizzaOrder = new Order();  // Singleton instance
-    private static List<Pizza> pizzas;
+    private List<Pizza> pizzas;
     private static int orderIDCounter = 1;
-
     private static int nextStoreID = 1;
-
     private int storeID;
-
     private Map<Pizza, Integer> pizzaOrderIDs;
 
 
@@ -80,7 +77,7 @@ public class Order {
      *
      * @return The List containing the pizzas in the order.
      */
-    public static List<Pizza> getPizzas() {
+    public List<Pizza> getPizzas() {
         return pizzas;
     }
 
