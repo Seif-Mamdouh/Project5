@@ -164,7 +164,7 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
 
             if (addedToOrder) {
                 Log.d("SpecialityPizzaAdapter", "Added Pizza to Order: " + selectedPizza);
-                showSuccessDialog();
+                //showSuccessDialog();
             } else {
                 Log.e("SpecialityPizzaAdapter", "Failed to add Pizza to Order");
             }
