@@ -1,7 +1,6 @@
 package com.example.rupizza;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +11,22 @@ import com.example.rupizza.RuPizza.Order;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-// StoreOrdersAdapter.java
 public class StoreOrdersAdapter extends BaseAdapter {
 
     private List<Integer> orderIDs;
     private Map<Integer, Order> orderMapping;
     private Context context;
+
+    private Order selectedOrder;
+
+    public void updateSelectedOrder(Order order) {
+        this.selectedOrder = order;
+        notifyDataSetChanged();
+    }
+
 
     public StoreOrdersAdapter(Context context, List<Integer> orderIDs, Map<Integer, Order> orderMapping) {
         this.context = context;
@@ -55,14 +59,14 @@ public class StoreOrdersAdapter extends BaseAdapter {
 
         Order order = (Order) getItem(position);
 
-        if (order != null) {
-            String orderDetails = "Order ID: " + order.getOrderIDs() + "\n";
+        if (order != null && order == selectedOrder) {
+            String orderDetails = "Order ID: " + orderMapping.keySet() + "\n";
 
             // Iterate over the pizzas in the order and append details
             for (Pizza pizza : order.getPizzas()) {
                 if (pizza instanceof SpecialityPizza) {
                     SpecialityPizza specialityPizza = (SpecialityPizza) pizza;
-                    orderDetails += "Order ID: " + specialityPizza.getPizzaID() + "\n" +  // Include Order ID here
+                    orderDetails += "Order ID: " + specialityPizza.getPizzaID() + "\n" +
                             "Pizza Type: " + specialityPizza.getPizzaType() + "\n" +
                             "Quantity: " + specialityPizza.getQuantity() + "\n" +
                             "Size: " + specialityPizza.getSize() + "\n" +
@@ -75,11 +79,15 @@ public class StoreOrdersAdapter extends BaseAdapter {
                 }
             }
 
-
             textOrderDetails.setText(orderDetails);
+        } else {
+            // If the order is not selected, set an empty string to clear the view
+            textOrderDetails.setText("");
         }
 
         return convertView;
     }
-}
 
+
+
+}

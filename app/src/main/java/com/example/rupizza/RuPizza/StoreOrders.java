@@ -55,6 +55,9 @@ public class StoreOrders {
 //        return true;
 //    }
 
+    public boolean isEmpty() {
+        return mapping.isEmpty();
+    }
 
     public boolean add(Order originalOrder) {
         if (originalOrder == null) {

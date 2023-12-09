@@ -1,4 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,14 +8,42 @@
     android:paddingTop="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="16dp"
-    tools:context=".StoresOrders">
+    tools:context=".CurrentOrder">
+
+
+    <Spinner
+        android:id="@+id/spinOrdIDsStore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp" />
 
     <ListView
         android:id="@+id/listViewStoreOrders"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="483dp"
+        android:layout_below="@id/spinOrdIDsStore"
+        android:layout_marginTop="3dp"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp" />
+        android:dividerHeight="0.5dp"></ListView>
+
+    <Button
+        android:id="@+id/btnStoreRemoveOrder"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinOrdIDsStore"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="495dp"
+        android:layout_marginEnd="79dp"
+        android:onClick="removeOrder"
+        android:text="Remove Order" />
+
+    <TextView
+        android:id="@+id/totalStore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taxPrice"
+        android:text="TextView" />
 
 
 </RelativeLayout>
