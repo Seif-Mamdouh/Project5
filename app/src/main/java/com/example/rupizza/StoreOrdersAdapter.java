@@ -49,6 +49,28 @@ public class StoreOrdersAdapter extends BaseAdapter {
         return position;
     }
 
+    // Method to calculate the total price based on a list of pizzas
+    private double calculateTotalPrice(List<Pizza> pizzas) {
+        double totalPrice = 0.0;
+        for (Pizza pizza : pizzas) {
+            if (pizza instanceof SpecialityPizza) {
+                totalPrice += ((SpecialityPizza) pizza).calculatePrice();
+            }
+        }
+        return totalPrice;
+    }
+
+    // Method to calculate the tax based on a list of pizzas
+    private double calculateTax(List<Pizza> pizzas) {
+        double tax = 0.0;
+        for (Pizza pizza : pizzas) {
+            if (pizza instanceof SpecialityPizza) {
+                tax += ((SpecialityPizza) pizza).calculateTax();
+            }
+        }
+        return tax;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -73,9 +95,9 @@ public class StoreOrdersAdapter extends BaseAdapter {
                             "Extra Cheese: " + (specialityPizza.isExtraCheese() ? "yes" : "no") + "\n" +
                             "Extra Sauce: " + (specialityPizza.isExtraSauce() ? "yes" : "no") + "\n" +
                             "Toppings: " + specialityPizza.getToppings() + "\n" +
-                            "Total Price: $" + specialityPizza.total() + "\n" +
+                            "Total Price: $" + specialityPizza.calculatePrice() + "\n" +
                             "Tax: $" + specialityPizza.calculateTax() + "\n" +
-                            "Total: $" + (specialityPizza.total() + specialityPizza.calculateTax()) + "\n\n";
+                            "Total: $" + (specialityPizza.total()) + "\n\n";
                 }
             }
 
