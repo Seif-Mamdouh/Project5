@@ -118,7 +118,7 @@ public class BuildYourOwn extends AppCompatActivity {
 
         placeOrderButton.setOnClickListener(v -> {
             // Get the selected pizza details
-            String selectedSize = sizeTypeSpinner.getSelectedItem().toString();
+            String selectedSize = sizeTypeSpinner.getSelectedItem().toString().toUpperCase();
             boolean extraCheese = extraCheeseCheckBox.isChecked();
             boolean extraSauce = extraSauceCheckBox.isChecked();
             int quantity = 1;  // You may adjust this based on your UI for quantity
@@ -136,7 +136,7 @@ public class BuildYourOwn extends AppCompatActivity {
             if (addedToOrder) {
                 // Handle success, you may show a success dialog or perform other actions
                 Log.d("BuildYourOwn", "Added Pizza to Order: " + selectedPizza);
-                showSuccessDialog();
+                showSuccessDialog(this);
             } else {
                 // Handle failure
                 Log.e("BuildYourOwn", "Failed to add Pizza to Order");
@@ -144,7 +144,7 @@ public class BuildYourOwn extends AppCompatActivity {
         });
     }
 
-    private void showSuccessDialog() {
+    private void showSuccessDialog(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Success")
                 .setMessage("Pizza added to the order successfully!")

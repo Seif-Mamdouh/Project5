@@ -59,10 +59,10 @@
 
             <ListView
                 android:id="@+id/availableToppingsListView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="368dp"
+                android:layout_height="150dp"
                 android:layout_below="@id/availableToppingsLabel"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
             <!-- Selected Toppings List -->
             <TextView
@@ -74,14 +74,14 @@
                 android:layout_below="@id/availableToppingsListView"
                 android:layout_marginTop="16dp"/>
 
+            <!-- Pizza Subtotal and Add to Order Button -->
             <ListView
                 android:id="@+id/selectedToppingsListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/selectedToppingsLabel"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
-            <!-- Pizza Subtotal and Add to Order Button -->
             <TextView
                 android:id="@+id/pizzaSubTotalTextView"
                 android:layout_width="wrap_content"
