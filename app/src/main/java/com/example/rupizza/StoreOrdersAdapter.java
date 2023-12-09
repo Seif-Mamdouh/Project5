@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.rupizza.RuPizza.BuildYourOwnPizza;
 import com.example.rupizza.RuPizza.Order;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
@@ -56,6 +57,9 @@ public class StoreOrdersAdapter extends BaseAdapter {
             if (pizza instanceof SpecialityPizza) {
                 totalPrice += ((SpecialityPizza) pizza).calculatePrice();
             }
+            else if (pizza instanceof BuildYourOwnPizza) {
+                totalPrice += ((BuildYourOwnPizza) pizza).calculatePrice();
+            }
         }
         return totalPrice;
     }
@@ -66,6 +70,9 @@ public class StoreOrdersAdapter extends BaseAdapter {
         for (Pizza pizza : pizzas) {
             if (pizza instanceof SpecialityPizza) {
                 tax += ((SpecialityPizza) pizza).calculateTax();
+            }
+            else if (pizza instanceof BuildYourOwnPizza) {
+                tax += ((BuildYourOwnPizza) pizza).calculateTax();
             }
         }
         return tax;
@@ -88,6 +95,19 @@ public class StoreOrdersAdapter extends BaseAdapter {
             for (Pizza pizza : order.getPizzas()) {
                 if (pizza instanceof SpecialityPizza) {
                     SpecialityPizza specialityPizza = (SpecialityPizza) pizza;
+                    orderDetails += "Order ID: " + specialityPizza.getPizzaID() + "\n" +
+                            "Pizza Type: " + specialityPizza.getPizzaType() + "\n" +
+                            "Quantity: " + specialityPizza.getQuantity() + "\n" +
+                            "Size: " + specialityPizza.getSize() + "\n" +
+                            "Extra Cheese: " + (specialityPizza.isExtraCheese() ? "yes" : "no") + "\n" +
+                            "Extra Sauce: " + (specialityPizza.isExtraSauce() ? "yes" : "no") + "\n" +
+                            "Toppings: " + specialityPizza.getToppings() + "\n" +
+                            "Total Price: $" + specialityPizza.calculatePrice() + "\n" +
+                            "Tax: $" + specialityPizza.calculateTax() + "\n" +
+                            "Total: $" + (specialityPizza.total()) + "\n\n";
+                }
+                else if (pizza instanceof BuildYourOwnPizza) {
+                    BuildYourOwnPizza specialityPizza = (BuildYourOwnPizza) pizza;
                     orderDetails += "Order ID: " + specialityPizza.getPizzaID() + "\n" +
                             "Pizza Type: " + specialityPizza.getPizzaType() + "\n" +
                             "Quantity: " + specialityPizza.getQuantity() + "\n" +

@@ -162,7 +162,7 @@ public class BuildYourOwnPizza extends Pizza {
 
     @Override
     public Size getSize() {
-        return null;
+        return size;
     }
 
 

@@ -92,6 +92,19 @@ public class StoreOrders {
                 );
             }
 
+            // Check the concrete type of Pizza and create a copy accordingly
+            if (pizza instanceof BuildYourOwnPizza) {
+                BuildYourOwnPizza specialityPizza = (BuildYourOwnPizza) pizza;
+                copiedPizza = new BuildYourOwnPizza(
+                        specialityPizza.getPizzaType(),
+                        specialityPizza.getSize(),
+                        specialityPizza.isExtraSauce(),
+                        specialityPizza.isExtraCheese(),
+                        new ArrayList<>(specialityPizza.getToppings()), // Create a new list to avoid modifying the original toppings list
+                        specialityPizza.getQuantity()
+                );
+            }
+
             if (copiedPizza != null) {
                 clonedOrder.addPizza(copiedPizza);
             }

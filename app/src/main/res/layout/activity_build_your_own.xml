@@ -40,6 +40,13 @@
                 android:layout_marginTop="8dp"/>
 
             <CheckBox
+                android:id="@+id/sauceSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/buildYourOwnTitle"
+                android:text="Select for alfredo/else tomato" />
+
+            <CheckBox
                 android:id="@+id/extraSauceCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

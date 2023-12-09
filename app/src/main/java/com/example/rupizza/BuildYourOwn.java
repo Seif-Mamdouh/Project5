@@ -29,6 +29,8 @@ public class BuildYourOwn extends AppCompatActivity {
     private Spinner sizeTypeSpinner;
     private CheckBox extraSauceCheckBox;
     private CheckBox extraCheeseCheckBox;
+
+    private CheckBox sauceSelection;
     private ListView availableToppingsListView;
     private ListView selectedToppingsListView;
     private TextView pizzaSubTotalTextView;
@@ -64,6 +66,7 @@ public class BuildYourOwn extends AppCompatActivity {
         sizeTypeSpinner = findViewById(R.id.sizeTypeSpinner);
         extraSauceCheckBox = findViewById(R.id.extraSauceCheckBox);
         extraCheeseCheckBox = findViewById(R.id.extraCheeseCheckBox);
+        sauceSelection = findViewById(R.id.sauceSelection);
         availableToppingsListView = findViewById(R.id.availableToppingsListView);
         selectedToppingsListView = findViewById(R.id.selectedToppingsListView);
         pizzaSubTotalTextView = findViewById(R.id.pizzaSubTotalTextView);
@@ -121,6 +124,16 @@ public class BuildYourOwn extends AppCompatActivity {
             String selectedSize = sizeTypeSpinner.getSelectedItem().toString().toUpperCase();
             boolean extraCheese = extraCheeseCheckBox.isChecked();
             boolean extraSauce = extraSauceCheckBox.isChecked();
+
+            if(selectedToppings.size() < MIN_TOPPINGS) {
+                // Handle failure
+                Log.e("BuildYourOwn", "Select at least 3 toppings.");
+                showErrorDialog("Select at least 3 toppings.");
+                return;
+            }
+
+            selectedToppings.add(sauceSelection.isSelected() ? "Alfredo sauce" : "Tomato sauce");
+
             int quantity = 1;  // You may adjust this based on your UI for quantity
 
             Pizza selectedPizza = Pizza.createPizza(Pizza.PizzaType.BUILD_YOUR_OWN,
@@ -136,20 +149,33 @@ public class BuildYourOwn extends AppCompatActivity {
             if (addedToOrder) {
                 // Handle success, you may show a success dialog or perform other actions
                 Log.d("BuildYourOwn", "Added Pizza to Order: " + selectedPizza);
-                showSuccessDialog(this);
+                showSuccessDialog(this, "Pizza added to the order successfully!");
             } else {
                 // Handle failure
                 Log.e("BuildYourOwn", "Failed to add Pizza to Order");
+                showErrorDialog("Failed to add Pizza to Order.");
             }
         });
     }
 
-    private void showSuccessDialog(Context context) {
+    private void showSuccessDialog(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Success")
-                .setMessage("Pizza added to the order successfully!")
+                .setMessage(message)
                 .setPositiveButton("OK", (dialog, which) -> {
                     // Handle OK button click if needed
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    // Method to show an error dialog
+    private void showErrorDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // You can add any additional action on OK button click
                     dialog.dismiss();
                 })
                 .show();
@@ -181,7 +207,9 @@ public class BuildYourOwn extends AppCompatActivity {
             selectedToppings.add(selectedTopping);
             updateCost();
         } else {
-            // Handle maximum toppings reached
+            // Handle failure
+            Log.e("BuildYourOwn", "Select maximum of 7 toppings.");
+            showErrorDialog("Select maximum of 7 toppings.");
         }
 
         // Notify the adapters that the data set has changed
