@@ -150,12 +150,42 @@ public class BuildYourOwn extends AppCompatActivity {
                 // Handle success, you may show a success dialog or perform other actions
                 Log.d("BuildYourOwn", "Added Pizza to Order: " + selectedPizza);
                 showSuccessDialog(this, "Pizza added to the order successfully!");
+                clearOrder();
+
             } else {
                 // Handle failure
                 Log.e("BuildYourOwn", "Failed to add Pizza to Order");
                 showErrorDialog("Failed to add Pizza to Order.");
             }
         });
+    }
+
+    private void clearOrder() {
+        // Reset spinner to the first item
+        sizeTypeSpinner.setSelection(0);
+
+        // Uncheck checkboxes
+        extraCheeseCheckBox.setChecked(false);
+        extraSauceCheckBox.setChecked(false);
+
+        // Clear selected toppings
+        selectedToppings.clear();
+
+        // Update UI elements
+        updateCost();
+        updateToppingsLists();
+
+        // You may also reset other UI components as needed
+
+        // Show the default image
+        changePicture("path/to/default/image");
+    }
+
+    private void updateToppingsLists() {
+        ArrayAdapter<String> selectedToppingsAdapter = (ArrayAdapter<String>) selectedToppingsListView.getAdapter();
+        selectedToppingsAdapter.clear();
+        selectedToppingsAdapter.addAll(selectedToppings);
+        selectedToppingsAdapter.notifyDataSetChanged();
     }
 
     private void showSuccessDialog(Context context, String message) {

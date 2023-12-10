@@ -195,7 +195,7 @@ public class BuildYourOwnPizza extends Pizza {
         } else {
             pizzaDetails.append("Extra Sauce: no\n");
         }
-        pizzaDetails.append("Toppings: ").append(String.join(", ", toppings)).append("\n"); // Include toppings here
+        pizzaDetails.append("Toppings: ").append(String.join(", ", toppings)).append("\n");
         pizzaDetails.append("Total Price: $").append(calculatePrice()).append("\n");
         pizzaDetails.append("Tax: $").append(calculateTax()).append("\n");
         pizzaDetails.append("Total: $").append(total()).append("\n");

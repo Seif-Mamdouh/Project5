@@ -87,6 +87,9 @@ public class Order {
             if (pizza instanceof SpecialityPizza) {
                 uniqueOrderIDs.add(((SpecialityPizza) pizza).getPizzaID());
             }
+            if (pizza instanceof BuildYourOwnPizza){
+                uniqueOrderIDs.add(((BuildYourOwnPizza) pizza).getPizzaID());
+            }
         }
         return new ArrayList<>(uniqueOrderIDs);
     }
