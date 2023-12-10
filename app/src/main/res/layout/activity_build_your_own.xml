@@ -1,18 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuildYourOwn">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Build Your Own"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/buildYourOwnTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Build Your Own Pizza"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+
+            <Spinner
+                android:id="@+id/sizeTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/buildYourOwnTitle"
+                android:layout_marginTop="8dp"/>
+
+            <CheckBox
+                android:id="@+id/extraCheeseCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Extra Cheese"
+                android:layout_below="@id/sizeTypeSpinner"
+                android:layout_marginTop="8dp"/>
+
+            <CheckBox
+                android:id="@+id/sauceSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/buildYourOwnTitle"
+                android:text="Select for alfredo/else tomato" />
+
+            <CheckBox
+                android:id="@+id/extraSauceCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Extra Sauce"
+                android:layout_below="@id/extraCheeseCheckBox"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Available Toppings List -->
+            <TextView
+                android:id="@+id/availableToppingsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available Toppings"
+                android:textSize="18sp"
+                android:layout_below="@id/extraSauceCheckBox"
+                android:layout_marginTop="16dp"/>
+
+            <ListView
+                android:id="@+id/availableToppingsListView"
+                android:layout_width="368dp"
+                android:layout_height="150dp"
+                android:layout_below="@id/availableToppingsLabel"
+                android:layout_marginTop="8dp" />
+
+            <!-- Selected Toppings List -->
+            <TextView
+                android:id="@+id/selectedToppingsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selected Toppings"
+                android:textSize="18sp"
+                android:layout_below="@id/availableToppingsListView"
+                android:layout_marginTop="16dp"/>
+
+            <!-- Pizza Subtotal and Add to Order Button -->
+            <ListView
+                android:id="@+id/selectedToppingsListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/selectedToppingsLabel"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/pizzaSubTotalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="18sp"
+                android:layout_below="@id/selectedToppingsListView"
+                android:layout_marginTop="16dp"/>
+
+            <Button
+                android:id="@+id/placeOrderButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Place Order"
+                android:layout_below="@id/pizzaSubTotalTextView"
+                android:layout_marginTop="16dp"/>
+
+            <ImageView
+                android:id="@+id/pizzaImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placeOrderButton"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_launcher_background"/>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

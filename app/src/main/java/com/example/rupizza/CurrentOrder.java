@@ -9,6 +9,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.rupizza.RuPizza.BuildYourOwnPizza;
 import com.example.rupizza.RuPizza.Order;
 import com.example.rupizza.RuPizza.Pizza;
 import com.example.rupizza.RuPizza.SpecialityPizza;
@@ -196,6 +198,11 @@ public class CurrentOrder extends AppCompatActivity {
                     "Pizza Type: " + specialityPizza.getPizzaType();
         }
 
+        else if (pizza instanceof BuildYourOwnPizza) {
+            orderDetails +=
+                    "Pizza Type: " + Pizza.PizzaType.BUILD_YOUR_OWN;
+        }
+
         Toast.makeText(this, orderDetails, Toast.LENGTH_LONG).show();
     }
 
@@ -215,6 +222,9 @@ public class CurrentOrder extends AppCompatActivity {
             if (pizza instanceof SpecialityPizza && ((SpecialityPizza) pizza).getPizzaID() == orderID) {
                 filteredPizzas.add(pizza);
             }
+            else if (pizza instanceof BuildYourOwnPizza && ((BuildYourOwnPizza) pizza).getPizzaID() == orderID) {
+                filteredPizzas.add(pizza);
+            }
         }
         return filteredPizzas;
     }
@@ -226,6 +236,9 @@ public class CurrentOrder extends AppCompatActivity {
         List<Pizza> pizzasToRemove = new ArrayList<>();
         for (Pizza pizza : currentOrder.getPizzas()) {
             if (pizza instanceof SpecialityPizza && ((SpecialityPizza) pizza).getPizzaID() == orderID) {
+                pizzasToRemove.add(pizza);
+            }
+            else if (pizza instanceof BuildYourOwnPizza && ((BuildYourOwnPizza) pizza).getPizzaID() == orderID) {
                 pizzasToRemove.add(pizza);
             }
         }
@@ -280,6 +293,10 @@ public class CurrentOrder extends AppCompatActivity {
             if (pizza instanceof SpecialityPizza) {
                 totalPrice += ((SpecialityPizza) pizza).calculatePrice();
             }
+            else if (pizza instanceof BuildYourOwnPizza) {
+                totalPrice += ((BuildYourOwnPizza) pizza).calculatePrice();
+            }
+
         }
         return totalPrice;
     }
@@ -290,6 +307,9 @@ public class CurrentOrder extends AppCompatActivity {
         for (Pizza pizza : pizzas) {
             if (pizza instanceof SpecialityPizza) {
                 tax += ((SpecialityPizza) pizza).calculateTax();
+            }
+            else if (pizza instanceof BuildYourOwnPizza) {
+                tax += ((BuildYourOwnPizza) pizza).calculateTax();
             }
         }
         return tax;
