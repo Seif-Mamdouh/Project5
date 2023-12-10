@@ -43,7 +43,9 @@
                 android:id="@+id/sauceSelection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/buildYourOwnTitle"
+                android:layout_alignBottom="@id/extraSauceCheckBox"
+                android:layout_marginRight="-3dp"
+                android:layout_marginBottom="-41dp"
                 android:text="Select for alfredo/else tomato" />
 
             <CheckBox
@@ -55,37 +57,38 @@
                 android:layout_marginTop="8dp"/>
 
             <!-- Available Toppings List -->
+
+            <!-- Selected Toppings List -->
             <TextView
                 android:id="@+id/availableToppingsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Available Toppings"
-                android:textSize="18sp"
                 android:layout_below="@id/extraSauceCheckBox"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="37dp"
+                android:text="Available Toppings"
+                android:textSize="18sp" />
 
             <ListView
                 android:id="@+id/availableToppingsListView"
-                android:layout_width="368dp"
-                android:layout_height="150dp"
+                android:layout_width="362dp"
+                android:layout_height="119dp"
                 android:layout_below="@id/availableToppingsLabel"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="4dp" />
 
-            <!-- Selected Toppings List -->
+            <!-- Pizza Subtotal and Add to Order Button -->
             <TextView
                 android:id="@+id/selectedToppingsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Selected Toppings"
-                android:textSize="18sp"
                 android:layout_below="@id/availableToppingsListView"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="6dp"
+                android:text="Selected Toppings"
+                android:textSize="18sp" />
 
-            <!-- Pizza Subtotal and Add to Order Button -->
             <ListView
                 android:id="@+id/selectedToppingsListView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="362dp"
+                android:layout_height="77dp"
                 android:layout_below="@id/selectedToppingsLabel"
                 android:layout_marginTop="8dp" />
 
@@ -109,10 +112,10 @@
             <ImageView
                 android:id="@+id/pizzaImageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="79dp"
                 android:layout_below="@id/placeOrderButton"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_launcher_background"/>
+                android:layout_marginTop="11dp"
+                android:src="@drawable/ic_launcher_background" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

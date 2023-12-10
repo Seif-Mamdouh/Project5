@@ -174,11 +174,6 @@ public class BuildYourOwn extends AppCompatActivity {
         // Update UI elements
         updateCost();
         updateToppingsLists();
-
-        // You may also reset other UI components as needed
-
-        // Show the default image
-        changePicture("path/to/default/image");
     }
 
     private void updateToppingsLists() {
@@ -212,9 +207,7 @@ public class BuildYourOwn extends AppCompatActivity {
     }
 
     private void changePicture(String imagePath) {
-        // Load and set the image using your preferred method (Glide, Picasso, etc.)
-        // For demonstration purposes, set a placeholder image
-        pizzaImageView.setImageResource(R.drawable.ic_launcher_background);
+        pizzaImageView.setImageResource(R.drawable.pizza);
     }
 
     private void updateCost() {
