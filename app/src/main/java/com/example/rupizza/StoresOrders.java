@@ -102,14 +102,4 @@ public class StoresOrders extends AppCompatActivity {
         }
     }
 
-
-//    private double calculateTotal(Order order) {
-//        if (order != null) {
-//            // Assuming you have a method in your Order class to calculate the total
-//            double total = ((BuildYourOwnPizza) order).total();
-//            return total;
-//        }
-//        return 0.0;
-//    }
-
 }
