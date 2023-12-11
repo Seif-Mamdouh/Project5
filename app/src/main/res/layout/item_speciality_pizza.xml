@@ -26,23 +26,12 @@
             android:padding="8dp"
             android:textSize="18sp" />
 
-        <!-- Add a TextView for displaying toppings -->
-
         <TextView
             android:id="@+id/textToppings"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textSize="14sp" />
-
-<!--        <Spinner-->
-<!--            android:id="@+id/spinnerSize"-->
-<!--            android:layout_width="222dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/textPizzaDetails"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginBottom="8dp" />-->
 
         <Spinner
             android:id="@+id/spinnerSize"
@@ -66,13 +55,13 @@
             android:id="@+id/checkBoxExtraCheese"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Extra Cheese" />
+            android:text="@string/extraCheese" />
 
         <CheckBox
             android:id="@+id/checkBoxExtraSauce"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Extra Sauce" />
+            android:text="@string/extraSauce" />
 
         <Spinner
             android:id="@+id/spinnerQuantity"
@@ -87,7 +76,7 @@
             android:id="@+id/btnAddToCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add to Cart"
+            android:text="@string/place_order"
             />
 
 
