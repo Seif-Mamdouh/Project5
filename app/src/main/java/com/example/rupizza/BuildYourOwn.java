@@ -131,7 +131,6 @@ public class BuildYourOwn extends AppCompatActivity {
                 return;
             }
 
-            selectedToppings.add(sauceSelection.isSelected() ? "Alfredo sauce" : "Tomato sauce");
             String selectedSauce = sauceSelection.isChecked() ? "Alfredo sauce" : "Tomato sauce";
             selectedToppings.add(selectedSauce);
 
