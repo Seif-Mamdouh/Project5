@@ -15,6 +15,10 @@ import com.example.rupizza.RuPizza.SpecialityPizza;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents the StoreOrders android studio Adapter class
+ * @author Satya Pandya
+ */
 public class StoreOrdersAdapter extends BaseAdapter {
 
     private List<Integer> orderIDs;
@@ -23,34 +27,63 @@ public class StoreOrdersAdapter extends BaseAdapter {
 
     private Order selectedOrder;
 
+    /**
+     * Functino to update selected order
+     * Notifies data set changed
+     * @param order
+     */
     public void updateSelectedOrder(Order order) {
         this.selectedOrder = order;
         notifyDataSetChanged();
     }
 
-
+    /**
+     * Constructor for the adapter class
+     * @param context
+     * @param orderIDs
+     * @param orderMapping
+     */
     public StoreOrdersAdapter(Context context, List<Integer> orderIDs, Map<Integer, Order> orderMapping) {
         this.context = context;
         this.orderIDs = orderIDs;
         this.orderMapping = orderMapping;
     }
 
+    /**
+     * Gets the size of the orderIDs
+     * @return
+     */
     @Override
     public int getCount() {
         return orderIDs.size();
     }
 
+    /**
+     * Get order at index
+     * @param position Position of the item whose data we want within the adapter's
+     * data set.
+     * @return
+     */
     @Override
     public Object getItem(int position) {
         return orderMapping.get(orderIDs.get(position));
     }
 
+    /**
+     * Get the position
+     * @param position The position of the item within the adapter's data set whose row id we want.
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-    // Method to calculate the total price based on a list of pizzas
+    /**
+     * Method to calculate the total price based on a list of pizzas
+     * @param pizzas
+     * @return total price
+     */
     private double calculateTotalPrice(List<Pizza> pizzas) {
         double totalPrice = 0.0;
         for (Pizza pizza : pizzas) {
@@ -64,7 +97,11 @@ public class StoreOrdersAdapter extends BaseAdapter {
         return totalPrice;
     }
 
-    // Method to calculate the tax based on a list of pizzas
+    /**
+     * Method to calculate the tax based on a list of pizzas
+     * @param pizzas
+     * @return tax
+     */
     private double calculateTax(List<Pizza> pizzas) {
         double tax = 0.0;
         for (Pizza pizza : pizzas) {
@@ -78,6 +115,19 @@ public class StoreOrdersAdapter extends BaseAdapter {
         return tax;
     }
 
+    /**
+     * Function to set up the view
+     * @param position The position of the item within the adapter's data set of the item whose view
+     *        we want.
+     * @param convertView The old view to reuse, if possible. Note: You should check that this view
+     *        is non-null and of an appropriate type before using. If it is not possible to convert
+     *        this view to display the correct data, this method can create a new view.
+     *        Heterogeneous lists can specify their number of view types, so that this View is
+     *        always of the right type (see {@link #getViewTypeCount()} and
+     *        {@link #getItemViewType(int)}).
+     * @param parent The parent that this view will eventually be attached to
+     * @return View
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {

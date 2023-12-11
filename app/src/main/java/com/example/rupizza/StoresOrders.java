@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents the StoreOrders android studio front-end to back-end connector class
+ * @author Satya Pandya
+ */
 public class StoresOrders extends AppCompatActivity {
 
     private ListView listViewStoreOrders;
@@ -24,6 +28,13 @@ public class StoresOrders extends AppCompatActivity {
     private TextView textViewTotal;
     private Button btnRemoveOrder;
 
+    /**
+     * onCreate function to create android studio instance
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +96,9 @@ public class StoresOrders extends AppCompatActivity {
         });
     }
 
+    /**
+     * Function for removing selected store order
+     */
     private void removeSelectedStoreOrder() {
         // Get the selected store order
         int selectedOrderID = (int) spinnerOrderIDs.getSelectedItem();

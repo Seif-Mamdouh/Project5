@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Represents the BuildYourOwn android studio front-end to back-end connector class
+ * @author Satya Pandya
+ */
 public class BuildYourOwn extends AppCompatActivity {
 
     private Spinner sizeTypeSpinner;
@@ -52,6 +56,13 @@ public class BuildYourOwn extends AppCompatActivity {
     private List<String> availableToppings;
     private List<String> selectedToppings;
 
+    /**
+     * onCreate function to create android studio instance
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +73,9 @@ public class BuildYourOwn extends AppCompatActivity {
         setupListeners();
     }
 
+    /**
+     * Method to initialize views
+     */
     private void initializeViews() {
         sizeTypeSpinner = findViewById(R.id.sizeTypeSpinner);
         extraSauceCheckBox = findViewById(R.id.extraSauceCheckBox);
@@ -74,6 +88,9 @@ public class BuildYourOwn extends AppCompatActivity {
         pizzaImageView = findViewById(R.id.pizzaImageView);
     }
 
+    /**
+     * Method to initialize UI
+     */
     private void initializeUI() {
         pizzaSubTotalTextView.setText("$0.00");
 
@@ -101,6 +118,9 @@ public class BuildYourOwn extends AppCompatActivity {
         changePicture("path/to/default/image");
     }
 
+    /**
+     * Method to setup the listeners
+     */
     private void setupListeners() {
         extraSauceCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> updateCost());
         extraCheeseCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> updateCost());
@@ -163,6 +183,9 @@ public class BuildYourOwn extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method to clean the order
+     */
     private void clearOrder() {
         // Reset spinner to the first item
         sizeTypeSpinner.setSelection(0);
@@ -182,8 +205,9 @@ public class BuildYourOwn extends AppCompatActivity {
 
     }
 
-
-
+    /**
+     * Method to update the toppings list
+     */
     private void updateToppingsLists() {
         runOnUiThread(() -> {
             ArrayAdapter<String> selectedToppingsAdapter = (ArrayAdapter<String>) selectedToppingsListView.getAdapter();
@@ -194,7 +218,11 @@ public class BuildYourOwn extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Method to show the success dialog
+     * @param context
+     * @param message
+     */
     private void showSuccessDialog(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Success")
@@ -206,7 +234,10 @@ public class BuildYourOwn extends AppCompatActivity {
                 .show();
     }
 
-    // Method to show an error dialog
+    /**
+     * Method to show the error dialog
+     * @param message
+     */
     private void showErrorDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Error")
@@ -218,10 +249,17 @@ public class BuildYourOwn extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * Method to change the picture
+     * @param imagePath
+     */
     private void changePicture(String imagePath) {
         pizzaImageView.setImageResource(R.drawable.pizza);
     }
 
+    /**
+     * Method to update the cost
+     */
     private void updateCost() {
         double totalCost = calculateCost();
         if (extraSauceCheckBox.isChecked()) {
@@ -233,6 +271,10 @@ public class BuildYourOwn extends AppCompatActivity {
         pizzaSubTotalTextView.setText(String.format("$%.2f", totalCost));
     }
 
+    /**
+     * Helper method when available topping clicked
+     * @param position
+     */
     private void onAvailableToppingClicked(int position) {
         String selectedTopping = availableToppings.get(position);
         int selectedToppingsCount = selectedToppings.size();
@@ -252,6 +294,10 @@ public class BuildYourOwn extends AppCompatActivity {
         ((ArrayAdapter<String>) selectedToppingsListView.getAdapter()).notifyDataSetChanged();
     }
 
+    /**
+     * Helper method when remove topping clicked
+     * @param position
+     */
     private void onRemoveToppingClicked(int position) {
         String selectedTopping = selectedToppings.get(position);
         availableToppings.add(selectedTopping);
@@ -263,6 +309,10 @@ public class BuildYourOwn extends AppCompatActivity {
         ((ArrayAdapter<String>) selectedToppingsListView.getAdapter()).notifyDataSetChanged();
     }
 
+    /**
+     * Method to calculate cost of order
+     * @return
+     */
     private double calculateCost() {
         String selectedSize = sizeTypeSpinner.getSelectedItem().toString();
         double basePrice = getBasePrice(selectedSize);
@@ -271,6 +321,11 @@ public class BuildYourOwn extends AppCompatActivity {
         return basePrice + toppingsPrice;
     }
 
+    /**
+     * Method to get the base price
+     * @param size
+     * @return base price
+     */
     private double getBasePrice(String size) {
         switch (size) {
             case "Small":
@@ -284,6 +339,10 @@ public class BuildYourOwn extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to get the toppings price
+     * @return price of toppings
+     */
     private double getToppingsPrice() {
         int additionalToppings = Math.max(0, selectedToppings.size() - MIN_TOPPINGS);
         return additionalToppings * TOPPING_PRICE;

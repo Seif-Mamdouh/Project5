@@ -107,7 +107,7 @@ public class BuildYourOwnPizza extends Pizza {
      * Calculates the price without tax for the order.
      * The toppings include an extra item (sauce) which is not actually part of the toppings.
      * We add it to our "toppings" array for our specific implementation.
-     * @return
+     * @return The price without tax
      */
     @Override
     public double calculatePrice() {
@@ -119,6 +119,10 @@ public class BuildYourOwnPizza extends Pizza {
         return basePrice + sizePrice + extraSauceAndCheesePrice + toppingsPrice;
     }
 
+    /**
+     * Calculate and returns base price
+     * @return The base price
+     */
     private double calculateBasePrice() {
         switch (size) {
             case SMALL, MEDIUM, LARGE -> {
@@ -128,6 +132,10 @@ public class BuildYourOwnPizza extends Pizza {
         return DEFAULT_NUMBER;
     }
 
+    /**
+     * Calculate pizza size price
+     * @return pizza size price
+     */
     private double calculateSizePrice() {
         switch (size) {
             case SMALL -> {
@@ -143,6 +151,10 @@ public class BuildYourOwnPizza extends Pizza {
         return DEFAULT_NUMBER;
     }
 
+    /**
+     * Calculate price of extra sauce and cheese
+     * @return price of extra sauce and cheese
+     */
     private double calculateExtraSauceAndCheesePrice() {
         double extraSaucePrice = extraSauce ? EXTRASUACE_PRICE : DEFAULT_NUMBER;
         double extraCheesePrice = extraCheese ? EXTRACHEESE_PRICE : DEFAULT_NUMBER;
@@ -150,22 +162,36 @@ public class BuildYourOwnPizza extends Pizza {
         return extraSaucePrice + extraCheesePrice;
     }
 
+    /**
+     * price of toppings
+     * @return price of toppings
+     */
     private double calculateToppingsPrice() {
         int additionalToppings = Math.max(0, toppings.size() - INCLUDED_TOPPINGS);
         return additionalToppings * TOPPING_PRICE;
     }
 
-
+    /**
+     * Getter function to return toppings
+     * @return toppings
+     */
     public List<String> getToppings() {
         return toppings;
     }
 
+    /**
+     * getter function to return size
+     * @return size
+     */
     @Override
     public Size getSize() {
         return size;
     }
 
-
+    /**
+     * Setter function to set toppings
+     * @param toppings
+     */
     public void setToppings(List<String> toppings) {
         this.toppings = toppings;
     }
