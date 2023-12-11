@@ -110,7 +110,6 @@ public class StoreOrdersAdapter extends BaseAdapter {
                     BuildYourOwnPizza specialityPizza = (BuildYourOwnPizza) pizza;
                     orderDetails += "Order ID: " + specialityPizza.getPizzaID() + "\n" +
                             "Pizza Type: " + specialityPizza.getPizzaType() + "\n" +
-                            "Quantity: " + specialityPizza.getQuantity() + "\n" +
                             "Size: " + specialityPizza.getSize() + "\n" +
                             "Extra Cheese: " + (specialityPizza.isExtraCheese() ? "yes" : "no") + "\n" +
                             "Extra Sauce: " + (specialityPizza.isExtraSauce() ? "yes" : "no") + "\n" +

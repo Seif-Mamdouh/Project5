@@ -98,7 +98,7 @@ public class BuildYourOwn extends AppCompatActivity {
 
         sizeTypeSpinner.setSelection(0);
         updateCost();
-        changePicture("path/to/default/image"); // Provide the path to your default image
+        changePicture("path/to/default/image");
     }
 
     private void setupListeners() {
@@ -126,21 +126,25 @@ public class BuildYourOwn extends AppCompatActivity {
             boolean extraSauce = extraSauceCheckBox.isChecked();
 
             if(selectedToppings.size() < MIN_TOPPINGS) {
-                // Handle failure
                 Log.e("BuildYourOwn", "Select at least 3 toppings.");
                 showErrorDialog("Select at least 3 toppings.");
                 return;
             }
 
             selectedToppings.add(sauceSelection.isSelected() ? "Alfredo sauce" : "Tomato sauce");
+            String selectedSauce = sauceSelection.isChecked() ? "Alfredo sauce" : "Tomato sauce";
+            selectedToppings.add(selectedSauce);
 
-            int quantity = 1;  // You may adjust this based on your UI for quantity
+            Log.d("BuildYourOwn", "Selected Sauce: " + selectedSauce);
+
+            List<String> selectedToppingsCopy = new ArrayList<>(selectedToppings);
+            int quantity = 1;
 
             Pizza selectedPizza = Pizza.createPizza(Pizza.PizzaType.BUILD_YOUR_OWN,
                     Size.valueOf(selectedSize),
                     extraSauce,
                     extraCheese,
-                    selectedToppings,
+                    selectedToppingsCopy,
                     quantity
             );
 
@@ -168,20 +172,29 @@ public class BuildYourOwn extends AppCompatActivity {
         extraCheeseCheckBox.setChecked(false);
         extraSauceCheckBox.setChecked(false);
 
-        // Clear selected toppings
-        selectedToppings.clear();
+
+        // Clear selected toppings on the UI thread
+        runOnUiThread(() -> {
+            updateToppingsLists();
+        });
 
         // Update UI elements
         updateCost();
-        updateToppingsLists();
+
     }
 
+
+
     private void updateToppingsLists() {
-        ArrayAdapter<String> selectedToppingsAdapter = (ArrayAdapter<String>) selectedToppingsListView.getAdapter();
-        selectedToppingsAdapter.clear();
-        selectedToppingsAdapter.addAll(selectedToppings);
-        selectedToppingsAdapter.notifyDataSetChanged();
+        runOnUiThread(() -> {
+            ArrayAdapter<String> selectedToppingsAdapter = (ArrayAdapter<String>) selectedToppingsListView.getAdapter();
+            selectedToppingsAdapter.clear();
+            selectedToppingsAdapter.addAll(selectedToppings);
+            selectedToppingsAdapter.notifyDataSetChanged();
+        });
     }
+
+
 
     private void showSuccessDialog(Context context, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
