@@ -22,7 +22,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * CurrentOrder that displays the current pizza order,
+ * allows the user to interact with the order (Remove and Place Order)
+ *
+ * @author Seifeldeen Mohamed
+ */
 public class CurrentOrder extends AppCompatActivity {
     private ListView listView;
     private Spinner spinnerOrderIDs; // Add spinner for Order IDs
@@ -32,10 +37,11 @@ public class CurrentOrder extends AppCompatActivity {
     private TextView textViewTax;
     private TextView textViewTotal;
     private Button btnPlaceOrder;
-
-
     private StoreOrdersAdapter storeOrdersAdapter;
 
+    /**
+     * Called when the activity is starting. This is where most initialization
+     **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,17 +156,6 @@ public class CurrentOrder extends AppCompatActivity {
 
     }
 
-//    // Modify the placeOrderInStore method to accept the order to place
-//    private void placeOrderInStore(Order order) {
-//        // Add the current order to the store orders
-//        StoreOrders.getInstance().add(order);
-//        // After adding the order in placeOrderInStore method
-//        Log.d("StoreOrders", "Store Orders after placing order: " + StoreOrders.getInstance().getOrders());
-//
-//    }
-//    // Create a copy of the current order
-//    Order currentOrderCopy = new Order();
-//                    currentOrderCopy.getPizzas().addAll(Order.getPizzaOrder().getPizzas());
     private void placeOrderInStore() {
         Order currentOrder = Order.getPizzaOrder();
 

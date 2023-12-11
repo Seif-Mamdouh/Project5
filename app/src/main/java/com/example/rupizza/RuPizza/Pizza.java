@@ -98,18 +98,20 @@ public abstract class Pizza {
     // Add this method to get default toppings for each pizza type
     public static List<String> getDefaultToppings(Pizza.PizzaType pizzaType) {
         Map<PizzaType, List<String>> defaultToppingsMap = new HashMap<>();
+
+
         // Define default toppings for each pizza type
-        defaultToppingsMap.put(PizzaType.DELUXE, List.of("Mushrooms", "Pepperoni", "Green Peppers"));
-        defaultToppingsMap.put(PizzaType.SUPREME, List.of("Sausage", "Black Olives", "Onions"));
-        defaultToppingsMap.put(PizzaType.MEATZZA, List.of("Bacon"));
-        defaultToppingsMap.put(PizzaType.SEAFOOD, List.of("Shrimp"));
-        defaultToppingsMap.put(PizzaType.PEPPERONI, List.of("Pepporini", "Tomato Sauce"));
-        defaultToppingsMap.put(PizzaType.HALAL, List.of("ALL HALAL"));
-        defaultToppingsMap.put(PizzaType.CHEESE, List.of("Mixed Cheeses"));
-        defaultToppingsMap.put(PizzaType.MIX_GRILL, List.of("MIx Grill"));
-        defaultToppingsMap.put(PizzaType.SALMON, List.of("Salmon"));
-        defaultToppingsMap.put(PizzaType.SHRIMP, List.of("Shrimp"));
-        defaultToppingsMap.put(PizzaType.BUFFALO_CHICKEN, List.of("Buffalo Sauce", "Buffolo Chicken", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.DELUXE, List.of("Sausage","Pepperoni", "Mushrooms","Green Peppers", "Onions", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.SUPREME, List.of("Sausage", "Pepperoni", "Ham", "Green Pepper", "Onion", "Black Olives", "Onions", "Mushrooms", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.MEATZZA, List.of("Sausage", "Pepperoni", "Beef", "Ham", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.SEAFOOD, List.of("Shrimp", "Seafood", "CrabMeat", "Alferdo Sauce"));
+        defaultToppingsMap.put(PizzaType.PEPPERONI, List.of("Pepperoni", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.HALAL, List.of("ALL HALAL Meats", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.CHEESE, List.of("Mixed Cheeses", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.MIX_GRILL, List.of("Mix Grill", "Tomato Sauce"));
+        defaultToppingsMap.put(PizzaType.SALMON, List.of("Salmon", "Alferdo Sauce"));
+        defaultToppingsMap.put(PizzaType.SHRIMP, List.of("Shrimp", "Alferdo Sauce"));
+        defaultToppingsMap.put(PizzaType.BUFFALO_CHICKEN, List.of("Buffalo Sauce", "Buffalo Chicken", "Tomato Sauce"));
 
         return defaultToppingsMap.getOrDefault(pizzaType, new ArrayList<>());
     }
