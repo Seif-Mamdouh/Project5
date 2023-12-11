@@ -36,14 +36,13 @@
         android:layout_marginTop="495dp"
         android:layout_marginEnd="79dp"
         android:onClick="removeOrder"
-        android:text="Remove Order" />
+        android:text="@string/remove_order" />
 
     <TextView
         android:id="@+id/totalStore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/taxPrice"
-        android:text="TextView" />
-
+        android:layout_below="@id/listViewStoreOrders"
+        android:text="@string/text" />
 
 </RelativeLayout>

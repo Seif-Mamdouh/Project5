@@ -36,7 +36,7 @@
         android:layout_marginTop="495dp"
         android:layout_marginEnd="79dp"
         android:onClick="removeOrder"
-        android:text="Remove Order" />
+        android:text="@string/remove_order" />
 
     <TextView
         android:id="@+id/totalPrice"
@@ -44,21 +44,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnRemoveOrder"
         android:layout_marginTop="-44dp"
-        android:text="TextView" />
+        android:text="@string/text"  />
 
     <TextView
         android:id="@+id/taxPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/totalPrice"
-        android:text="TextView" />
+        android:text="@string/text"  />
 
     <TextView
         android:id="@+id/total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/taxPrice"
-        android:text="TextView" />
+        android:text="@string/text"  />
 
     <Button
         android:id="@+id/btnPlaceOrder"
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/total"
         android:layout_marginTop="28dp"
-        android:text="Place Order" />
+        android:text="@string/place_order"  />
 
 
 </RelativeLayout>

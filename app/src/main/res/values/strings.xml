@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">RuPizza</string>
+    <string name="button_speciality_pizza">Speciality Pizza</string>
+    <string name="button_BYO">Build Your Own</string>
+    <string name="button_current_order">Current Orders</string>
+    <string name="button_Store_Orders">Store Orders</string>
+    <string name="extraCheese">Extra Cheese</string>
+    <string name="extraSauce">Extra Sauce</string>
+    <string name="toppings">Available Toppings</string>
+    <string name="selectToppings">Selected Toppings</string>
+    <string name="number0">$0.00</string>
+    <string name="place_order">Place Order</string>
+    <string name="remove_order">Remove Order</string>
+    <string name="text">TextView</string>
 </resources>
