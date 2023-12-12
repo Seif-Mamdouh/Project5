@@ -42,6 +42,15 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
     private Context context;
 
 
+    private static final double BASE_DELUXE = 14.99;
+    private static final double BASE_SUPREME = 15.99;
+    private static final double BASE_MEATZZA = 16.99;
+    private static final double BASE_SEAFOOD = 17.99;
+    private static final double BASE_OTHER = 10.99;
+    private static final double EXTRA_MEDIUM_LARGE = 2.0;
+    private static final double EXTRA_CHEESE_OR_SAUCE = 1.0;
+
+
     /**
      * Constructs a new instance of {@code SpecialityPizzaAdapter}.
      *
@@ -254,47 +263,49 @@ public class SpecialityPizzaAdapter extends RecyclerView.Adapter<SpecialityPizza
         switch (pizzaType) {
             case DELUXE:
                 basePrice = switch (size) {
-                    case SMALL -> 14.99;
-                    case MEDIUM -> 14.99 + 2.0; // $2 extra for medium
-                    case LARGE -> 14.99 + 4.0; // $4 extra for large
+                    case SMALL -> BASE_DELUXE;
+                    case MEDIUM -> BASE_DELUXE + EXTRA_MEDIUM_LARGE;
+                    case LARGE -> BASE_DELUXE + 2 * EXTRA_MEDIUM_LARGE;
                 };
                 break;
             case SUPREME:
                 basePrice = switch (size) {
-                    case SMALL -> 15.99;
-                    case MEDIUM -> 15.99 + 2.0;
-                    case LARGE -> 15.99 + 4.0;
+                    case SMALL -> BASE_SUPREME;
+                    case MEDIUM -> BASE_SUPREME + EXTRA_MEDIUM_LARGE;
+                    case LARGE -> BASE_SUPREME + 2 * EXTRA_MEDIUM_LARGE;
                 };
+                break;
             case MEATZZA:
                 basePrice = switch (size) {
-                    case SMALL -> 16.99;
-                    case MEDIUM -> 16.99 + 2.0;
-                    case LARGE -> 16.99 + 4.0;
+                    case SMALL -> BASE_MEATZZA;
+                    case MEDIUM -> BASE_MEATZZA + EXTRA_MEDIUM_LARGE;
+                    case LARGE -> BASE_MEATZZA + 2 * EXTRA_MEDIUM_LARGE;
                 };
+                break;
             case SEAFOOD:
                 basePrice = switch (size) {
-                    case SMALL -> 17.99;
-                    case MEDIUM -> 17.99 + 2.0;
-                    case LARGE -> 17.99 + 4.0;
+                    case SMALL -> BASE_SEAFOOD;
+                    case MEDIUM -> BASE_SEAFOOD + EXTRA_MEDIUM_LARGE;
+                    case LARGE -> BASE_SEAFOOD + 2 * EXTRA_MEDIUM_LARGE;
                 };
                 break;
             case PEPPERONI, SHRIMP, HALAL, BUFFALO_CHICKEN, SALMON, CHEESE, MIX_GRILL:
-                        basePrice = switch (size) {
-                            case SMALL -> 10.99;
-                            case MEDIUM -> 10.99 + 2.0;
-                            case LARGE -> 10.99 + 4.0;
-                        };
+                basePrice = switch (size) {
+                    case SMALL -> BASE_OTHER;
+                    case MEDIUM -> BASE_OTHER + EXTRA_MEDIUM_LARGE;
+                    case LARGE -> BASE_OTHER + 2 * EXTRA_MEDIUM_LARGE;
+                };
                 break;
             default:
                 basePrice = 0.0;
         }
 
         if (extraCheese) {
-            basePrice += 1.0;
+            basePrice += EXTRA_CHEESE_OR_SAUCE;
         }
 
         if (extraSauce) {
-            basePrice += 1.0;
+            basePrice += EXTRA_CHEESE_OR_SAUCE;
         }
 
         return basePrice;

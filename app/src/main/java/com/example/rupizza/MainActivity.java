@@ -7,8 +7,17 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-public class MainActivity extends AppCompatActivity {
 
+
+/**
+ * MainActivity class represents the main entry point of the Rupizza application.
+ *
+ * @author Seifeldeen Mohamed
+ */
+public class MainActivity extends AppCompatActivity {
+    /**
+     * Called when the activity is starting.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
